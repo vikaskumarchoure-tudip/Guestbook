@@ -1,0 +1,26 @@
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="myModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="container col-md-offset-2 col-md-8">
+          <h3>Register</h3>
+          <form>
+            <div class="formGroup">
+              <br/>
+              <label for="username">Username</label>
+              <input type="text" class="form-control" name="username" #reg_username>
+              <br/>
+              <label for="password">Password</label>
+              <input type="text" class="form-control" name="password" #reg_pass>
+              <br/>
+              <label for="conf-password">Confirm Password</label>
+              <input type="text" class="form-control" name="conf-password" #reg_conf_pass>
+              <br/>
+              <button type="button" (click)="registerUser($event,reg_username,reg_pass,reg_conf_pass)" class="btn btn-default">Register</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
