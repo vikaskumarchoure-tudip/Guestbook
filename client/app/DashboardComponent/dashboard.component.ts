@@ -13,7 +13,7 @@ import { DashboardModelUq } from '../Model/dashboard.modeluq';
 export class DashboardComponent implements OnInit {
 
     saved_datas: DashboardModel[];
-    ret_datas:DashboardModelUq[];
+    ret_datas: DashboardModelUq[];
 
     useremail = "vikaskumar@gmail.com";
     constructor(private savedUser: SavedUser, private dashboardService: DashboardService) { }
@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
 
         var res;
         var visitoruq = {
-            visitor_host:this.useremail
+            visitor_host: this.useremail
         }
 
         this.saved_datas = [];
@@ -61,10 +61,16 @@ export class DashboardComponent implements OnInit {
         visitorouttime.value = "";
     }
 
+//edit visitor
+editVisitor(saved_data){
+    alert("yet to be done..."+saved_data._id);
+}
+
+//delete visitor
     deleteVisitor(saved_data) {
-var saved_datas = this.saved_datas;
-  console.log(saved_data._id);      
-        
+        var saved_datas = this.saved_datas;
+        console.log(saved_data._id);
+
         this.dashboardService.deleteVisitor(saved_data._id).subscribe(data => {
             if (data.n == 1) {
                 for (var i = 0; i < saved_datas.length; i++) {

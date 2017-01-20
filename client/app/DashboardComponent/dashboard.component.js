@@ -51,6 +51,11 @@ var DashboardComponent = (function () {
         visitorintime.value = "";
         visitorouttime.value = "";
     };
+    //edit visitor
+    DashboardComponent.prototype.editVisitor = function (saved_data) {
+        alert("yet to be done..." + saved_data._id);
+    };
+    //delete visitor
     DashboardComponent.prototype.deleteVisitor = function (saved_data) {
         var saved_datas = this.saved_datas;
         console.log(saved_data._id);

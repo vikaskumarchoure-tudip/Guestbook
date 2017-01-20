@@ -4,19 +4,19 @@
       <div class="modal-header">
         <div class="container col-md-offset-2 col-md-8">
           <h3>Register</h3>
-          <form>
+          <form [formGroup]="registerForm" >
             <div class="formGroup">
               <br/>
-              <label for="username">Username</label>
-              <input type="text" class="form-control" name="username" #reg_username>
+              <label for="username">Name</label>
+              <input type="text"  formControlName="username" class="form-control" name="username" #reg_username>
               <br/>
-              <label for="password">Password</label>
-              <input type="text" class="form-control" name="password" #reg_pass>
+              <label for="password">Email</label>
+              <input type="text"  formControlName="password" class="form-control" name="password" #reg_pass>
               <br/>
-              <label for="conf-password">Confirm Password</label>
-              <input type="text" class="form-control" name="conf-password" #reg_conf_pass>
+              <label for="conf-password">Password</label>
+              <input type="text"  formControlName="confpassword" class="form-control" name="confpassword" #reg_conf_pass>
               <br/>
-              <button type="button" (click)="registerUser($event,reg_username,reg_pass,reg_conf_pass)" class="btn btn-default">Register</button>
+              <button type="button" (click)="registerUser($event,reg_username,reg_pass,reg_conf_pass)" [disabled]="!registerForm.valid" class="btn btn-default">Register</button>
             </div>
           </form>
         </div>

@@ -27,7 +27,7 @@ var LoginComponent = (function () {
     }
     LoginComponent.prototype.ngOnInit = function () {
         this.loginForm = this.formBuilder.group({
-            username: ['', forms_1.Validators.required],
+            username: ['', [forms_1.Validators.required, forms_1.Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
             password: ['', [forms_1.Validators.required, forms_1.Validators.minLength(6)]]
         });
     };
