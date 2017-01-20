@@ -13,9 +13,9 @@ import { DashboardComponent } from './DashboardComponent/dashboard.component';
 
 @NgModule({
   imports: [BrowserModule, HttpModule, BrowserModule, FormsModule, ReactiveFormsModule,
-  RouterModule.forRoot(ContactRoutes)
+    RouterModule.forRoot(ContactRoutes)
   ],
-  declarations: [AppComponent, TodosComponent, LoginComponent, RegisterComponent,DashboardComponent],
+  declarations: [AppComponent, TodosComponent, LoginComponent, RegisterComponent, DashboardComponent],
   bootstrap: [AppComponent],
 
 })

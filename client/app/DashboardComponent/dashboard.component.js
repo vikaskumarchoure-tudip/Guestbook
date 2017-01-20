@@ -10,18 +10,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var saveduser_1 = require("../saveduser");
+var forms_1 = require("@angular/forms");
 var dashboard_service_1 = require("../services/dashboard.service");
 var DashboardComponent = (function () {
-    function DashboardComponent(savedUser, dashboardService) {
+    function DashboardComponent(savedUser, formBuilder, dashboardService) {
         this.savedUser = savedUser;
+        this.formBuilder = formBuilder;
         this.dashboardService = dashboardService;
         this.useremail = "vikaskumar@gmail.com";
     }
     DashboardComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        console.log(this.savedUser.users_logged);
+        this.dashboardForm = this.formBuilder.group({
+            visitorname: ['', [forms_1.Validators.required, forms_1.Validators.minLength(6)]],
+            visitoremail: ['', [forms_1.Validators.required, forms_1.Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
+            visitorcontact: ['', [forms_1.Validators.required, forms_1.Validators.minLength(6)]],
+            visitorintime: ['', [forms_1.Validators.required]],
+            visitorouttime: ['', [forms_1.Validators.required]]
+        });
         //this.user_email = this.savedUser.user_email;
         //alert(this.savedUser.users_logged);
         //console.log("User"+this.savedUser.users_logged);
-        var _this = this;
         var res;
         var visitoruq = {
             visitor_host: this.useremail
@@ -78,7 +88,7 @@ DashboardComponent = __decorate([
         templateUrl: './dashboard.component.html',
         providers: [saveduser_1.SavedUser, dashboard_service_1.DashboardService]
     }),
-    __metadata("design:paramtypes", [saveduser_1.SavedUser, dashboard_service_1.DashboardService])
+    __metadata("design:paramtypes", [saveduser_1.SavedUser, forms_1.FormBuilder, dashboard_service_1.DashboardService])
 ], DashboardComponent);
 exports.DashboardComponent = DashboardComponent;
 //# sourceMappingURL=dashboard.component.js.map

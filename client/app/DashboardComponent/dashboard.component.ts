@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SavedUser } from '../saveduser';
+import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
 import { DashboardService } from '../services/dashboard.service';
 import { DashboardModel } from '../Model/dashboard.model';
 import { DashboardModelUq } from '../Model/dashboard.modeluq';
@@ -14,13 +15,23 @@ export class DashboardComponent implements OnInit {
 
     saved_datas: DashboardModel[];
     ret_datas: DashboardModelUq[];
-
-    useremail = "vikaskumar@gmail.com";
-    constructor(private savedUser: SavedUser, private dashboardService: DashboardService) { }
+    dashboardForm: FormGroup;
+    useremail = localStorage.getItem("host_email");
+    constructor(private savedUser: SavedUser, private formBuilder: FormBuilder, private dashboardService: DashboardService) { }
 
 
 
     ngOnInit() {
+        this.useremail = localStorage.getItem("host_email");
+        console.log(this.savedUser.users_logged);
+        this.dashboardForm = this.formBuilder.group({
+            visitorname: ['', [Validators.required, Validators.minLength(6)]],
+            visitoremail: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
+            visitorcontact: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(12)]],
+            visitorintime: ['', [Validators.required]],
+            visitorouttime: ['', [Validators.required]]
+        });
+
         //this.user_email = this.savedUser.user_email;
         //alert(this.savedUser.users_logged);
         //console.log("User"+this.savedUser.users_logged);
@@ -34,8 +45,6 @@ export class DashboardComponent implements OnInit {
         this.dashboardService.getSavedDatas(visitoruq).subscribe(saved_data => { this.saved_datas = saved_data });
 
     }
-
-
 
     addVisitor(event, visitorname, visitoremail, visitorcontact, visitorintime, visitorouttime) {
         //console.log(visitorname.value+""+visitoremail.value+""+visitorcontact.value+""+visitorintime.value+""+visitorouttime.value);        
@@ -61,12 +70,12 @@ export class DashboardComponent implements OnInit {
         visitorouttime.value = "";
     }
 
-//edit visitor
-editVisitor(saved_data){
-    alert("yet to be done..."+saved_data._id);
-}
+    //edit visitor
+    editVisitor(saved_data) {
+        alert("yet to be done..." + saved_data._id);
+    }
 
-//delete visitor
+    //delete visitor
     deleteVisitor(saved_data) {
         var saved_datas = this.saved_datas;
         console.log(saved_data._id);

@@ -19,39 +19,40 @@ export class LoginComponent implements OnInit {
     submitted = false;
     logindata = '';
     user_email = '';
-    constructor(private formBuilder: FormBuilder, private loginService: LoginService, private savedUser : SavedUser, private router : Router) { }
+    constructor(private formBuilder: FormBuilder, private loginService: LoginService, private savedUser: SavedUser, private router: Router) { }
 
-    ngOnInit(){
+    ngOnInit() {
         this.loginForm = this.formBuilder.group({
-            username: ['', [Validators.required,Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
+            username: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
             password: ['', [Validators.required, Validators.minLength(6)]]
         });
     }
-    
+
     onLogin(event, username, password) {
         var result;
-        this.loginUsers=[];
+        this.loginUsers = [];
         var newTodo = {
             email: username.value,
             password: password.value
         }
-        
+
         result = this.loginService.checkLogin(newTodo);
-        
+
         result.subscribe(loginUsers => {
-            
+
             this.loginUsers = loginUsers;
-            if(loginUsers == null){
+
+            if (loginUsers == null) {
                 alert("Please enter correct data");
                 username.value = "";
                 password.value = "";
             }
-            else{
-                this.savedUser.users_logged = ""+loginUsers.text;
-
+            else {
+                this.savedUser.users_logged = "" + loginUsers.text;
+                localStorage.setItem("host_email", ""+loginUsers.text);
                 this.router.navigate(['dashboard']);
             }
         });
     }
-    
+
 }

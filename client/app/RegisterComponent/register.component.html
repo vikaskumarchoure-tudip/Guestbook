@@ -4,19 +4,29 @@
       <div class="modal-header">
         <div class="container col-md-offset-2 col-md-8">
           <h3>Register</h3>
-          <form [formGroup]="registerForm" >
+          <form [formGroup]="registerForm">
             <div class="formGroup">
               <br/>
               <label for="username">Name</label>
-              <input type="text"  formControlName="username" class="form-control" name="username" #reg_username>
+              <input type="text" formControlName="username" class="form-control" name="username" #reg_username>
+              <div *ngIf="!(registerForm.controls['username'].valid || registerForm.controls['username'].pristine)" class="alert alert-danger">
+                Name is required
+              </div>
               <br/>
               <label for="password">Email</label>
-              <input type="text"  formControlName="password" class="form-control" name="password" #reg_pass>
+              <input type="email" formControlName="password" class="form-control" name="password" #reg_pass>
+              <div *ngIf="!(registerForm.controls['password'].valid || registerForm.controls['password'].pristine)" class="alert alert-danger">
+                Email is required
+              </div>
               <br/>
               <label for="conf-password">Password</label>
-              <input type="text"  formControlName="confpassword" class="form-control" name="confpassword" #reg_conf_pass>
+              <input type="password" formControlName="confpassword" class="form-control" name="confpassword" #reg_conf_pass>
+              <div *ngIf="!(registerForm.controls['confpassword'].valid || registerForm.controls['confpassword'].pristine)" class="alert alert-danger">
+                Password is required
+              </div>
               <br/>
-              <button type="button" (click)="registerUser($event,reg_username,reg_pass,reg_conf_pass)" [disabled]="!registerForm.valid" class="btn btn-default">Register</button>
+              <button type="button" (click)="registerUser($event,reg_username,reg_pass,reg_conf_pass)" [disabled]="!registerForm.valid"
+                class="btn btn-default">Register</button>
             </div>
           </form>
         </div>
