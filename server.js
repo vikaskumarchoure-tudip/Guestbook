@@ -27,10 +27,6 @@ app.use('/api/v1/',users_datas);
 app.use('/api/v1/', todos);
 app.use('/api/v1/',visitor_datas);
 
-//updated code
-//app.use('/api/v1/',reg_data);
-//updated code finish here
-
 app.listen(3000, function(){
     console.log('Server started on port 3000...');
 });

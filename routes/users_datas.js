@@ -66,7 +66,7 @@ router.post('/find_data', function (req, res, next) {
     //console.log(req.body.text+" "+req.body.name);
     
         db.users_datas.findOne({email:req.body.email,password:req.body.password}, function (err, result) {
-            
+
             if (err) {
                 //console.log(err);
                 res.json(err);
@@ -78,6 +78,7 @@ router.post('/find_data', function (req, res, next) {
         });
     
 });
+
 /*
 router.get('/todo/:id', function (req, res, next) {
 

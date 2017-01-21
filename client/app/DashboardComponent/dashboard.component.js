@@ -12,20 +12,22 @@ var core_1 = require("@angular/core");
 var saveduser_1 = require("../saveduser");
 var forms_1 = require("@angular/forms");
 var dashboard_service_1 = require("../services/dashboard.service");
+var router_1 = require("@angular/router");
 var DashboardComponent = (function () {
-    function DashboardComponent(savedUser, formBuilder, dashboardService) {
+    function DashboardComponent(savedUser, formBuilder, dashboardService, router) {
         this.savedUser = savedUser;
         this.formBuilder = formBuilder;
         this.dashboardService = dashboardService;
-        this.useremail = "vikaskumar@gmail.com";
+        this.router = router;
+        this.useremail = localStorage.getItem("host_email");
+        this.username = localStorage.getItem("host_name");
     }
     DashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
-        console.log(this.savedUser.users_logged);
         this.dashboardForm = this.formBuilder.group({
             visitorname: ['', [forms_1.Validators.required, forms_1.Validators.minLength(6)]],
             visitoremail: ['', [forms_1.Validators.required, forms_1.Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
-            visitorcontact: ['', [forms_1.Validators.required, forms_1.Validators.minLength(6)]],
+            visitorcontact: ['', [forms_1.Validators.required, forms_1.Validators.minLength(10), forms_1.Validators.maxLength(12)]],
             visitorintime: ['', [forms_1.Validators.required]],
             visitorouttime: ['', [forms_1.Validators.required]]
         });
@@ -79,6 +81,11 @@ var DashboardComponent = (function () {
             }
         });
     };
+    DashboardComponent.prototype.onLogOut = function () {
+        localStorage.removeItem("host_email");
+        localStorage.removeItem("host_name");
+        this.router.navigate(['']);
+    };
     return DashboardComponent;
 }());
 DashboardComponent = __decorate([
@@ -88,7 +95,7 @@ DashboardComponent = __decorate([
         templateUrl: './dashboard.component.html',
         providers: [saveduser_1.SavedUser, dashboard_service_1.DashboardService]
     }),
-    __metadata("design:paramtypes", [saveduser_1.SavedUser, forms_1.FormBuilder, dashboard_service_1.DashboardService])
+    __metadata("design:paramtypes", [saveduser_1.SavedUser, forms_1.FormBuilder, dashboard_service_1.DashboardService, router_1.Router])
 ], DashboardComponent);
 exports.DashboardComponent = DashboardComponent;
 //# sourceMappingURL=dashboard.component.js.map

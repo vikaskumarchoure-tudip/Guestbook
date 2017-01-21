@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
 import { DashboardService } from '../services/dashboard.service';
 import { DashboardModel } from '../Model/dashboard.model';
 import { DashboardModelUq } from '../Model/dashboard.modeluq';
+import { Router, RouterModule } from '@angular/router';
 @Component({
     moduleId: module.id,
     selector: 'dashboard-form',
@@ -17,13 +18,12 @@ export class DashboardComponent implements OnInit {
     ret_datas: DashboardModelUq[];
     dashboardForm: FormGroup;
     useremail = localStorage.getItem("host_email");
-    constructor(private savedUser: SavedUser, private formBuilder: FormBuilder, private dashboardService: DashboardService) { }
-
+    username = localStorage.getItem("host_name");
+    constructor(private savedUser: SavedUser, private formBuilder: FormBuilder, private dashboardService: DashboardService,private router:Router) { }
 
 
     ngOnInit() {
-        this.useremail = localStorage.getItem("host_email");
-        console.log(this.savedUser.users_logged);
+
         this.dashboardForm = this.formBuilder.group({
             visitorname: ['', [Validators.required, Validators.minLength(6)]],
             visitoremail: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
@@ -89,6 +89,13 @@ export class DashboardComponent implements OnInit {
                 }
             }
         });
+
+    }
+
+    onLogOut() {
+        localStorage.removeItem("host_email");
+        localStorage.removeItem("host_name");
+        this.router.navigate(['']);
 
     }
 
