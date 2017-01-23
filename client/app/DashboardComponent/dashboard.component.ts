@@ -95,6 +95,7 @@ export class DashboardComponent implements OnInit {
     onLogOut() {
         localStorage.removeItem("host_email");
         localStorage.removeItem("host_name");
+        
         this.router.navigate(['']);
 
     }

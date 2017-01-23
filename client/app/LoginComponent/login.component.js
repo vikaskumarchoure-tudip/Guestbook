@@ -40,6 +40,7 @@ var LoginComponent = (function () {
             password: password.value
         };
         result = this.loginService.checkLogin(newTodo);
+        //console.log(result);
         result.subscribe(function (loginUsers) {
             _this.loginUsers = loginUsers;
             if (loginUsers == null) {
