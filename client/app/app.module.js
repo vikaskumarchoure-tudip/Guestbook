@@ -17,6 +17,7 @@ var login_component_1 = require("./LoginComponent/login.component");
 var register_component_1 = require("./RegisterComponent/register.component");
 var users_routing_1 = require("./Routing/users.routing");
 var dashboard_component_1 = require("./DashboardComponent/dashboard.component");
+var edit_component_1 = require("./EditComponent/edit.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -27,7 +28,7 @@ AppModule = __decorate([
         imports: [platform_browser_1.BrowserModule, http_1.HttpModule, platform_browser_1.BrowserModule, forms_1.FormsModule, forms_2.ReactiveFormsModule,
             router_1.RouterModule.forRoot(users_routing_1.ContactRoutes)
         ],
-        declarations: [app_component_1.AppComponent, todos_component_1.TodosComponent, login_component_1.LoginComponent, register_component_1.RegisterComponent, dashboard_component_1.DashboardComponent],
+        declarations: [app_component_1.AppComponent, todos_component_1.TodosComponent, login_component_1.LoginComponent, register_component_1.RegisterComponent, dashboard_component_1.DashboardComponent, edit_component_1.EditComponent],
         bootstrap: [app_component_1.AppComponent],
     })
 ], AppModule);

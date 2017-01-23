@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
     dashboardForm: FormGroup;
     useremail = localStorage.getItem("host_email");
     username = localStorage.getItem("host_name");
-    constructor(private savedUser: SavedUser, private formBuilder: FormBuilder, private dashboardService: DashboardService,private router:Router) { }
+    constructor(private savedUser: SavedUser, private formBuilder: FormBuilder, private dashboardService: DashboardService, private router: Router) { }
 
 
     ngOnInit() {
@@ -72,7 +72,14 @@ export class DashboardComponent implements OnInit {
 
     //edit visitor
     editVisitor(saved_data) {
-        alert("yet to be done..." + saved_data._id);
+        //alert("yet to be done..." + saved_data._id);
+        localStorage.setItem("current_visitor_data_name", saved_data.visitor_name);
+        localStorage.setItem("current_visitor_data_email", saved_data.visitor_email);
+        localStorage.setItem("current_visitor_data_contact", saved_data.visitor_contact);
+        localStorage.setItem("current_visitor_data_intime", saved_data.visitor_intime);
+        localStorage.setItem("current_visitor_data_outtime", saved_data.visitor_outtime);
+        localStorage.setItem("current_visitor_data_host", saved_data.visitor_host);
+        this.router.navigate(['editcomponent']);
     }
 
     //delete visitor
@@ -95,7 +102,7 @@ export class DashboardComponent implements OnInit {
     onLogOut() {
         localStorage.removeItem("host_email");
         localStorage.removeItem("host_name");
-        
+
         this.router.navigate(['']);
 
     }

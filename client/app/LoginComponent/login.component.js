@@ -52,7 +52,7 @@ var LoginComponent = (function () {
                 _this.savedUser.users_logged = "" + loginUsers.text;
                 localStorage.setItem('host_email', loginUsers.email);
                 localStorage.setItem('host_name', loginUsers.username);
-                console.log("" + loginUsers.email);
+                //console.log(""+loginUsers.email);
                 _this.router.navigate(['dashboard']);
             }
         });

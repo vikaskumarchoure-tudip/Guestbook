@@ -65,7 +65,14 @@ var DashboardComponent = (function () {
     };
     //edit visitor
     DashboardComponent.prototype.editVisitor = function (saved_data) {
-        alert("yet to be done..." + saved_data._id);
+        //alert("yet to be done..." + saved_data._id);
+        localStorage.setItem("current_visitor_data_name", saved_data.visitor_name);
+        localStorage.setItem("current_visitor_data_email", saved_data.visitor_email);
+        localStorage.setItem("current_visitor_data_contact", saved_data.visitor_contact);
+        localStorage.setItem("current_visitor_data_intime", saved_data.visitor_intime);
+        localStorage.setItem("current_visitor_data_outtime", saved_data.visitor_outtime);
+        localStorage.setItem("current_visitor_data_host", saved_data.visitor_host);
+        this.router.navigate(['editcomponent']);
     };
     //delete visitor
     DashboardComponent.prototype.deleteVisitor = function (saved_data) {

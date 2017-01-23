@@ -102,7 +102,7 @@ router.post('/find_data', function (req, res, next) {
                         }
                         else {
                             res.send(result);
-                            console.log("success pass is found");
+                            //console.log("success pass is found");
                         } 
             });
         }

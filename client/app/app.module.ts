@@ -10,12 +10,13 @@ import { LoginComponent } from './LoginComponent/login.component';
 import { RegisterComponent } from './RegisterComponent/register.component';
 import { ContactRoutes } from './Routing/users.routing';
 import { DashboardComponent } from './DashboardComponent/dashboard.component';
+import { EditComponent } from './EditComponent/edit.component';
 
 @NgModule({
   imports: [BrowserModule, HttpModule, BrowserModule, FormsModule, ReactiveFormsModule,
     RouterModule.forRoot(ContactRoutes)
   ],
-  declarations: [AppComponent, TodosComponent, LoginComponent, RegisterComponent, DashboardComponent],
+  declarations: [AppComponent, TodosComponent, LoginComponent, RegisterComponent, DashboardComponent,EditComponent],
   bootstrap: [AppComponent],
 
 })

@@ -1,0 +1,45 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">Guestbook Edit</a>
+        </div>
+    </div>
+</nav>
+<div class="col-md-offset-4 col-md-4">
+<form [formGroup]="editForm">
+    <div class="formGroup">
+        <br/>
+        <label for="visitor_name_edit">Visitor Name</label>
+        <input type="text" formControlName="visitor_name_edit" class="form-control" name="visitor_name_edit" #visitor_name_edit>
+        <div *ngIf="!(editForm.controls['visitor_name_edit'].valid || editForm.controls['visitor_name_edit'].pristine)" class="alert alert-danger">
+            Visitor Name is required
+        </div>
+        <br/>
+        <label for="visitor_email_edit">Visitor Email</label>
+        <input type="text" formControlName="visitor_email_edit" class="form-control" name="visitor_email_edit" #visitor_email_edit>
+        <div *ngIf="!(editForm.controls['visitor_email_edit'].valid || editForm.controls['visitor_email_edit'].pristine)" class="alert alert-danger">
+            Visitor Email is required
+        </div>
+        <br/>
+        <label for="visitor_contact_edit">Visitor Contact</label>
+        <input type="text" formControlName="visitor_contact_edit" class="form-control" name="visitor_contact_edit" #visitor_contact_edit>
+        <div *ngIf="!(editForm.controls['visitor_contact_edit'].valid || editForm.controls['visitor_contact_edit'].pristine)" class="alert alert-danger">
+            Visitor Contact Number is required
+        </div>
+        <br/>
+        <label for="visitor_intime_edit">Visitor In Time</label>
+        <input type="text" formControlName="visitor_intime_edit" class="form-control" name="visitor_intime_edit" #visitor_intime_edit>
+        <div *ngIf="!(editForm.controls['visitor_intime_edit'].valid || editForm.controls['visitor_intime_edit'].pristine)" class="alert alert-danger">
+            Visitor In Time is required
+        </div>
+        <br/>
+        <label for="visitor_outtime_edit">Visitor Name</label>
+        <input type="text" formControlName="visitor_outtime_edit" class="form-control" name="visitor_outtime_edit" #visitor_outtime_edit>
+        <div *ngIf="!(editForm.controls['visitor_outtime_edit'].valid || editForm.controls['visitor_outtime_edit'].pristine)" class="alert alert-danger">
+            Visitor Out Time is required
+        </div>
+        <br/>
+        <button type="button" (click)="editVisitor($event,visitor_name_edit,visitor_email_edit,visitor_contact_edit,visitor_intime_edit,visitor_outtime_edit)" [disabled]="!editForm.valid" class="btn btn-default">Edit Visitor</button>
+    </div>
+</form>
+</div>

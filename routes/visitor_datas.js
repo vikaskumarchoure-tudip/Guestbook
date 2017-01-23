@@ -9,8 +9,7 @@ router.get('/visitor_datas', function (req, res, next) {
     db.visitor_datas.find(function (err, datas) {
         if (err) {
             res.send(err);
-        }
-        else {
+        } else {
             res.json(datas);
         }
     });
@@ -20,64 +19,56 @@ router.get('/visitor_datas', function (req, res, next) {
 //get specific data
 router.post('/visitor_datauq', function (req, res, next) {
     var visitors = req.body;
-       db.visitor_datas.find({visitor_host : visitors.visitor_host},function (err, datas) {
+    db.visitor_datas.find({
+        visitor_host: visitors.visitor_host
+    }, function (err, datas) {
         if (err) {
             res.send(err);
-        }
-        else {
-            
+        } else {
+
             res.json(datas);
         }
     });
-    
+
 });
 
 //save visitors
 router.post('/visitor_data', function (req, res, next) {
     var visitors = req.body;
-    
-        db.visitor_datas.save(visitors, function (err, result) {
-            if (err) {
-                res.send(err);
-            }
-            else {
-                res.json(result);
-            }
-        });
-    
+    db.visitor_datas.save(visitors, function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json(result);
+        }
+    });
+
 });
 
 //update visitors
-router.put('/visitor_data/:id', function (req, res, next) {
-    var todo = req.body;
-    var updobj = {};
+router.post('/visitors', function (req, res, next) {
 
-    if (todo.isCompleted) {
-        updobj.isCompleted = todo.isCompleted;
-    }
-
-    if (todo.text) {
-        updobj.text = todo.text;
-    }
-
-    if (!updobj) {
-        res.status(400);
-        res.json({
-            "error": "Invalid Data"
-        });
-    }
-    else {
-        db.visitor_datas.update({
-            _id: mongojs.ObjectId(req.params.id)
-        }, updobj, {}, function (err, result) {
+    console.log("Partially running update");
+    var visitors = req.body;
+    /*
+        db.visitor_datas.find(function (err, datas) {
             if (err) {
                 res.send(err);
-            }
-            else {
-                res.json(result);
+            } else {
+                res.json(datas);
             }
         });
-    }
+    */
+
+    db.visitor_datas.update(visitors, function (err, result) {
+        if (err) {
+            res.send(err);
+            console.log("Not Running update");
+        } else {
+            res.json(result);
+            console.log("Running update");
+        }
+    });
 
 });
 
@@ -89,8 +80,7 @@ router.delete('/visitor_data/:id', function (req, res, next) {
     }, '', function (err, result) {
         if (err) {
             res.send(err);
-        }
-        else {
+        } else {
             res.json(result);
         }
     });
