@@ -21,8 +21,7 @@ router.get('/visitor_datas', function (req, res, next) {
                     'error': true,
                     'message': 'SESSION EXPIRED'
                 });
-            }
-            else{
+            } else {
                 res.send({
                     'error': true,
                     'message': 'Server error occured'
@@ -53,8 +52,7 @@ router.post('/visitor_datauq', function (req, res, next) {
                     'error': true,
                     'message': 'SESSION EXPIRED'
                 });
-            }
-            else{
+            } else {
                 res.send({
                     'error': true,
                     'message': 'Server error occured'
@@ -84,8 +82,7 @@ router.post('/visitor_data', function (req, res, next) {
                     'error': true,
                     'message': 'SESSION EXPIRED'
                 });
-            }
-            else{
+            } else {
                 res.send({
                     'error': true,
                     'message': 'Server error occured'
@@ -100,54 +97,10 @@ router.post('/visitor_data', function (req, res, next) {
 });
 
 //update visitors
-router.post('/visitors', function (req, res, next) {
-
-    console.log("Partially running update");
-    /*  var visitors = req.body;
-      
-          db.visitor_datas.find(function (err, datas) {
-              if (err) {
-                  res.send(err);
-              } else {
-                  res.json(datas);
-              }
-          });
-     */
-
-    db.visitor_datas.update({
-            'visitor_email': req.body.visitor_email
-        }, {
-            $set: {
-                visitors
-            }
-        },
-        function (err, result) {
-           if (err) {
-            if (res.status(500)) {
-                res.send({
-                    'error': true,
-                    'message': 'INTERNAL SERVER ERROR'
-                });
-            } else if (res.status(400)) {
-                res.send({
-                    'error': true,
-                    'message': 'SESSION EXPIRED'
-                });
-            }
-            else{
-                res.send({
-                    'error': true,
-                    'message': 'Server error occured'
-                });
-            }
-            //res.send(err);
-        } else {
-                res.json(result);
-                console.log("Running update");
-            }
-        });
-
+router.put('/visitor_edit', function (req, res, err) {
+    console.log("You reached here...");
 });
+
 
 //delete visitors
 router.delete('/visitor_data/:id', function (req, res, next) {
@@ -166,8 +119,7 @@ router.delete('/visitor_data/:id', function (req, res, next) {
                     'error': true,
                     'message': 'SESSION EXPIRED'
                 });
-            }
-            else{
+            } else {
                 res.send({
                     'error': true,
                     'message': 'Server error occured'

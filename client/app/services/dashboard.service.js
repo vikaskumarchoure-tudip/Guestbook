@@ -25,10 +25,11 @@ var DashboardService = (function () {
         headers.append("content-type", "application/json");
         return this._http.post('api/v1/visitor_data', JSON.stringify(dash_data), { headers: headers }).map(function (res) { return res.json(); });
     };
-    DashboardService.prototype.editSavedDatas = function (dash_data) {
+    DashboardService.prototype.editSavedDatas = function (visitor_edit) {
         var headers = new http_1.Headers();
         headers.append("content-type", "application/json");
-        return this._http.post('api/v1/visitors', JSON.stringify(dash_data), { headers: headers }).map(function (res) { return res.json(); });
+        console.log("Reached to dashboard service...");
+        return this._http.put('/api/v1/visitor_edit', JSON.stringify(visitor_edit), { headers: headers }).map(function (res) { return res.json(); });
     };
     DashboardService.prototype.deleteVisitor = function (id) {
         return this._http.delete('/api/v1/visitor_data/' + id).map(function (res) { return res.json(); });

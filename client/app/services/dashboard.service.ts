@@ -22,12 +22,12 @@ export class DashboardService {
         return this._http.post('api/v1/visitor_data', JSON.stringify(dash_data), { headers: headers }).map(res => res.json());
     }
 
-    editSavedDatas(dash_data) {
+    editSavedDatas(visitor_edit) {
         var headers = new Headers();
         headers.append("content-type", "application/json");
-        return this._http.post('api/v1/visitors', JSON.stringify(dash_data), { headers: headers }).map(res => res.json());
+        console.log("Reached to dashboard service...");
+        return this._http.put('/api/v1/visitor_edit', JSON.stringify(visitor_edit), { headers: headers }).map(res => res.json());
     }
-
 
     deleteVisitor(id) {
         return this._http.delete('/api/v1/visitor_data/' + id).map(res => res.json());

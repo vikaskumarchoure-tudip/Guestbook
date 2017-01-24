@@ -4,12 +4,11 @@ import { Router } from '@angular/router';
 import { LoginData } from './logindata';
 import { LoginU } from '../Model/login.model';
 import { LoginService } from '../services/login.service';
-import { SavedUser } from '../saveduser';
 
 @Component({
     selector: 'login-form',
     templateUrl: 'app/LoginComponent/login.component.html',
-    providers: [LoginService, SavedUser]
+    providers: [LoginService]
 })
 
 export class LoginComponent implements OnInit {
@@ -19,7 +18,7 @@ export class LoginComponent implements OnInit {
     submitted = false;
     logindata = '';
     user_email = '';
-    constructor(private formBuilder: FormBuilder, private loginService: LoginService, private savedUser: SavedUser, private router: Router) { }
+    constructor(private formBuilder: FormBuilder, private loginService: LoginService, private router: Router) { }
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
@@ -51,7 +50,6 @@ export class LoginComponent implements OnInit {
                 password.value = "";
             }
             else {
-                this.savedUser.users_logged = "" + loginUsers.text;
                 localStorage.setItem('host_email', loginUsers.email);
                 localStorage.setItem('host_name', loginUsers.username);
                 //console.log(""+loginUsers.email);

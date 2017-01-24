@@ -28,7 +28,7 @@ var EditComponent = (function () {
         var visitor_data_host = localStorage.getItem("current_visitor_data_host");
         this.editForm = this.formBuilder.group({
             visitor_name_edit: [visitor_data_name, forms_1.Validators.required],
-            visitor_email_edit: [visitor_data_email, forms_1.Validators.required],
+            visitor_email_edit: [visitor_data_email, [forms_1.Validators.required, forms_1.Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
             visitor_contact_edit: [visitor_data_contact, forms_1.Validators.required],
             visitor_indate_edit: [visitor_data_indate],
             visitor_intime_edit: [visitor_data_intime, forms_1.Validators.required],
@@ -54,8 +54,8 @@ var EditComponent = (function () {
         localStorage.removeItem("current_visitor_data_indate");
         localStorage.removeItem("current_visitor_data_intime");
         localStorage.removeItem("current_visitor_data_host");
-        console.log(visitor_name.value + "," + visitor_email.value + "," + visitor_contact.value + "," + visitor_indate.value + "," + visitor_intime.value + "," + visitor_outtime.value);
-        //this.router.navigate(['dashboard']);
+        //console.log(visitor_name.value+","+visitor_email.value+","+visitor_contact.value+","+visitor_indate.value+","+visitor_intime.value+","+visitor_outtime.value);
+        this.router.navigate(['dashboard']);
     };
     return EditComponent;
 }());

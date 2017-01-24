@@ -28,7 +28,7 @@ export class EditComponent implements OnInit {
         this.editForm = this.formBuilder.group(
             {
                 visitor_name_edit: [visitor_data_name, Validators.required],
-                visitor_email_edit: [visitor_data_email, Validators.required],
+                visitor_email_edit: [visitor_data_email, [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
                 visitor_contact_edit: [visitor_data_contact, Validators.required],
                 visitor_indate_edit: [visitor_data_indate],
                 visitor_intime_edit: [visitor_data_intime, Validators.required],
@@ -53,7 +53,6 @@ export class EditComponent implements OnInit {
         };
 
         result = this.dashService.editSavedDatas(visitor_data);
-
         localStorage.removeItem("current_visitor_data_name");
         localStorage.removeItem("current_visitor_data_email");
         localStorage.removeItem("current_visitor_data_contact");
@@ -61,7 +60,7 @@ export class EditComponent implements OnInit {
         localStorage.removeItem("current_visitor_data_intime");
         localStorage.removeItem("current_visitor_data_host");
 
-        console.log(visitor_name.value+","+visitor_email.value+","+visitor_contact.value+","+visitor_indate.value+","+visitor_intime.value+","+visitor_outtime.value);
-        //this.router.navigate(['dashboard']);
+        //console.log(visitor_name.value+","+visitor_email.value+","+visitor_contact.value+","+visitor_indate.value+","+visitor_intime.value+","+visitor_outtime.value);
+        this.router.navigate(['dashboard']);
     }
 }

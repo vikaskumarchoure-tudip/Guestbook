@@ -13,12 +13,10 @@ var forms_1 = require("@angular/forms");
 var router_1 = require("@angular/router");
 var logindata_1 = require("./logindata");
 var login_service_1 = require("../services/login.service");
-var saveduser_1 = require("../saveduser");
 var LoginComponent = (function () {
-    function LoginComponent(formBuilder, loginService, savedUser, router) {
+    function LoginComponent(formBuilder, loginService, router) {
         this.formBuilder = formBuilder;
         this.loginService = loginService;
-        this.savedUser = savedUser;
         this.router = router;
         this.login_model = new logindata_1.LoginData('', '');
         this.submitted = false;
@@ -49,7 +47,6 @@ var LoginComponent = (function () {
                 password.value = "";
             }
             else {
-                _this.savedUser.users_logged = "" + loginUsers.text;
                 localStorage.setItem('host_email', loginUsers.email);
                 localStorage.setItem('host_name', loginUsers.username);
                 //console.log(""+loginUsers.email);
@@ -63,9 +60,9 @@ LoginComponent = __decorate([
     core_1.Component({
         selector: 'login-form',
         templateUrl: 'app/LoginComponent/login.component.html',
-        providers: [login_service_1.LoginService, saveduser_1.SavedUser]
+        providers: [login_service_1.LoginService]
     }),
-    __metadata("design:paramtypes", [forms_1.FormBuilder, login_service_1.LoginService, saveduser_1.SavedUser, router_1.Router])
+    __metadata("design:paramtypes", [forms_1.FormBuilder, login_service_1.LoginService, router_1.Router])
 ], LoginComponent);
 exports.LoginComponent = LoginComponent;
 //# sourceMappingURL=login.component.js.map

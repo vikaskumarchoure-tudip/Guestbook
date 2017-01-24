@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SavedUser } from '../saveduser';
 import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
 import { DashboardService } from '../services/dashboard.service';
 import { DashboardModel } from '../Model/dashboard.model';
@@ -9,7 +8,7 @@ import { Router, RouterModule } from '@angular/router';
     moduleId: module.id,
     selector: 'dashboard-form',
     templateUrl: './dashboard.component.html',
-    providers: [SavedUser, DashboardService]
+    providers: [DashboardService]
 })
 
 export class DashboardComponent implements OnInit {
@@ -19,7 +18,7 @@ export class DashboardComponent implements OnInit {
     dashboardForm: FormGroup;
     useremail = localStorage.getItem("host_email");
     username = localStorage.getItem("host_name");
-    constructor(private savedUser: SavedUser, private formBuilder: FormBuilder, private dashboardService: DashboardService, private router: Router) { }
+    constructor( private formBuilder: FormBuilder, private dashboardService: DashboardService, private router: Router) { }
 
 
     ngOnInit() {
@@ -80,7 +79,7 @@ export class DashboardComponent implements OnInit {
         localStorage.setItem("current_visitor_data_indate", saved_data.visitor_indate);
         localStorage.setItem("current_visitor_data_intime", saved_data.visitor_intime);
         localStorage.setItem("current_visitor_data_host", saved_data.visitor_host);
-        this.router.navigate(['editcomponent']);
+        this.router.navigate(['editvisitor']);
     }
 
     //delete visitor

@@ -9,13 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var saveduser_1 = require("../saveduser");
 var forms_1 = require("@angular/forms");
 var dashboard_service_1 = require("../services/dashboard.service");
 var router_1 = require("@angular/router");
 var DashboardComponent = (function () {
-    function DashboardComponent(savedUser, formBuilder, dashboardService, router) {
-        this.savedUser = savedUser;
+    function DashboardComponent(formBuilder, dashboardService, router) {
         this.formBuilder = formBuilder;
         this.dashboardService = dashboardService;
         this.router = router;
@@ -73,7 +71,7 @@ var DashboardComponent = (function () {
         localStorage.setItem("current_visitor_data_indate", saved_data.visitor_indate);
         localStorage.setItem("current_visitor_data_intime", saved_data.visitor_intime);
         localStorage.setItem("current_visitor_data_host", saved_data.visitor_host);
-        this.router.navigate(['editcomponent']);
+        this.router.navigate(['editvisitor']);
     };
     //delete visitor
     DashboardComponent.prototype.deleteVisitor = function (saved_data) {
@@ -101,9 +99,9 @@ DashboardComponent = __decorate([
         moduleId: module.id,
         selector: 'dashboard-form',
         templateUrl: './dashboard.component.html',
-        providers: [saveduser_1.SavedUser, dashboard_service_1.DashboardService]
+        providers: [dashboard_service_1.DashboardService]
     }),
-    __metadata("design:paramtypes", [saveduser_1.SavedUser, forms_1.FormBuilder, dashboard_service_1.DashboardService, router_1.Router])
+    __metadata("design:paramtypes", [forms_1.FormBuilder, dashboard_service_1.DashboardService, router_1.Router])
 ], DashboardComponent);
 exports.DashboardComponent = DashboardComponent;
 //# sourceMappingURL=dashboard.component.js.map
