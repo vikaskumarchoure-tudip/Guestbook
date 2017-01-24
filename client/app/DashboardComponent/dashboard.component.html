@@ -26,25 +26,26 @@
                     <td>
                         <div *ngIf="dashboardForm.controls.visitorname.hasError('minlength')"> Visitor Name is Required </div>
                         <div *ngIf="dashboardForm.controls.visitorname.hasError('pattern')">Field must only have characters</div>
-                        <input class="form-control input-lg" formControlName="visitorname" placeholder="Visitor Name..." autofocus #visitorname>
+                        <input type="text" class="form-control input-lg" formControlName="visitorname" placeholder="Visitor Name..." autofocus #visitorname>
                     </td>
                     <td>
-                        <input class="form-control input-lg" formControlName="visitoremail" placeholder="Visitor Email..." #visitoremail>
+                        <input type="email" class="form-control input-lg" formControlName="visitoremail" placeholder="Visitor Email..." #visitoremail>
                     </td>
                     <td>
-                        <input class="form-control input-lg" formControlName="visitorcontact" placeholder="Visitor Contact..." #visitorcontact></td>
+                        <input type="number" class="form-control input-lg" formControlName="visitorcontact" placeholder="Visitor Contact..." #visitorcontact></td>
                     <td>
-                        <input class="form-control input-lg" formControlName="visitorintime" placeholder="Visitor In Time..." #visitorintime></td>
+                        <input type="date" class="form-control input-lg" formControlName="visitorindate" placeholder="Visitor In Time..." #visitorindate>
+                    </td>
                     <td>
-                        <input class="form-control input-lg" formControlName="visitorouttime" placeholder="Visitor Out Time..." #visitorouttime></td>
+                        <input type="time" class="form-control input-lg" formControlName="visitorintime" placeholder="Visitor Out Time..." #visitorintime></td>
                     <td>
-                        <button type="button" [disabled]="!dashboardForm.valid" (click)="addVisitor($event,visitorname,visitoremail,visitorcontact,visitorintime,visitorouttime)"
+                        <button type="button" [disabled]="!dashboardForm.valid" (click)="addVisitor($event,visitorname,visitoremail,visitorcontact,visitorindate,visitorintime)"
                             class="btn btn-success btn-lg">Add Visitor</button>
                     </td>
                 </tr>
             </table>
         </form>
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-10 col-md-offset-1">
             <div class="add-todo-form text-center">
                 <br/><br/>
             </div>
@@ -55,6 +56,7 @@
                             <th>Visitor Name</th>
                             <th>Email</th>
                             <th>Contact No</th>
+                            <th>Check In Date</th>
                             <th>In Time</th>
                             <th>Out Time</th>
                             <th>Edit</th>
@@ -66,6 +68,7 @@
                             <td>{{saved_data.visitor_name}}</td>
                             <td>{{saved_data.visitor_email}}</td>
                             <td>{{saved_data.visitor_contact}}</td>
+                            <td>{{saved_data.visitor_indate}}</td>
                             <td>{{saved_data.visitor_intime}}</td>
                             <td>{{saved_data.visitor_outtime}}</td>
                             <td><input type="button" (click)="editVisitor(saved_data)" class="btn btn-default pull-right" value="Edit"></td>
@@ -73,18 +76,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <!--
-                    <div class="col-md-7">
-                        {{saved_data.text}}
-                    </div>
-                        
-                    
-                    <div class="col-md-4 btns">
-                        
-                        
-                    </div>
-
-                    -->
             </div>
         </div>
     </div>

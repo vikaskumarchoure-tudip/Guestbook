@@ -22,6 +22,12 @@ router.get('/visitor_datas', function (req, res, next) {
                     'message': 'SESSION EXPIRED'
                 });
             }
+            else{
+                res.send({
+                    'error': true,
+                    'message': 'Server error occured'
+                });
+            }
             //res.send(err);
         } else {
             res.json(datas);
@@ -48,6 +54,12 @@ router.post('/visitor_datauq', function (req, res, next) {
                     'message': 'SESSION EXPIRED'
                 });
             }
+            else{
+                res.send({
+                    'error': true,
+                    'message': 'Server error occured'
+                });
+            }
             //res.send(err);
         } else {
 
@@ -62,7 +74,24 @@ router.post('/visitor_data', function (req, res, next) {
     var visitors = req.body;
     db.visitor_datas.save(visitors, function (err, result) {
         if (err) {
-            res.send(err);
+            if (res.status(500)) {
+                res.send({
+                    'error': true,
+                    'message': 'INTERNAL SERVER ERROR'
+                });
+            } else if (res.status(400)) {
+                res.send({
+                    'error': true,
+                    'message': 'SESSION EXPIRED'
+                });
+            }
+            else{
+                res.send({
+                    'error': true,
+                    'message': 'Server error occured'
+                });
+            }
+            //res.send(err);
         } else {
             res.json(result);
         }
@@ -93,10 +122,26 @@ router.post('/visitors', function (req, res, next) {
             }
         },
         function (err, result) {
-            if (err) {
-                res.send(err);
-                console.log("Not Running update");
-            } else {
+           if (err) {
+            if (res.status(500)) {
+                res.send({
+                    'error': true,
+                    'message': 'INTERNAL SERVER ERROR'
+                });
+            } else if (res.status(400)) {
+                res.send({
+                    'error': true,
+                    'message': 'SESSION EXPIRED'
+                });
+            }
+            else{
+                res.send({
+                    'error': true,
+                    'message': 'Server error occured'
+                });
+            }
+            //res.send(err);
+        } else {
                 res.json(result);
                 console.log("Running update");
             }
@@ -111,7 +156,24 @@ router.delete('/visitor_data/:id', function (req, res, next) {
         _id: mongojs.ObjectId(req.params.id)
     }, '', function (err, result) {
         if (err) {
-            res.send(err);
+            if (res.status(500)) {
+                res.send({
+                    'error': true,
+                    'message': 'INTERNAL SERVER ERROR'
+                });
+            } else if (res.status(400)) {
+                res.send({
+                    'error': true,
+                    'message': 'SESSION EXPIRED'
+                });
+            }
+            else{
+                res.send({
+                    'error': true,
+                    'message': 'Server error occured'
+                });
+            }
+            //res.send(err);
         } else {
             res.json(result);
         }

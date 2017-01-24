@@ -11,7 +11,24 @@ router.get('/users_datas', function (req, res, next) {
 
     db.users_datas.find(function (err, datas) {
         if (err) {
-            res.send(err);
+            if (res.status(500)) {
+                res.send({
+                    'error': true,
+                    'message': 'INTERNAL SERVER ERROR'
+                });
+            } else if (res.status(400)) {
+                res.send({
+                    'error': true,
+                    'message': 'SESSION EXPIRED'
+                });
+            }
+            else{
+                res.send({
+                    'error': true,
+                    'message': 'Server error occured'
+                });
+            }
+            //res.send(err);
         } else {
             res.json(datas);
         }
@@ -26,7 +43,24 @@ router.post('/users_data', function (req, res, next) {
 
     bcrypt.hash(req.body.password, 10, function (err, hash) {
         if (err) {
-            console.log(err);
+            if (res.status(500)) {
+                res.send({
+                    'error': true,
+                    'message': 'INTERNAL SERVER ERROR'
+                });
+            } else if (res.status(400)) {
+                res.send({
+                    'error': true,
+                    'message': 'SESSION EXPIRED'
+                });
+            }
+            else{
+                res.send({
+                    'error': true,
+                    'message': 'Server error occured'
+                });
+            }
+            //res.send(err);
         } else {
             console.log(hash);
         }
@@ -39,8 +73,25 @@ router.post('/users_data', function (req, res, next) {
             password: hash
         }, function (err, result) {
             if (err) {
-                res.send("There is error");
-            } else {
+            if (res.status(500)) {
+                res.send({
+                    'error': true,
+                    'message': 'INTERNAL SERVER ERROR'
+                });
+            } else if (res.status(400)) {
+                res.send({
+                    'error': true,
+                    'message': 'SESSION EXPIRED'
+                });
+            }
+            else{
+                res.send({
+                    'error': true,
+                    'message': 'Server error occured'
+                });
+            }
+            //res.send(err);
+        } else {
                 res.json("Response is coming");
             }
         });
@@ -87,8 +138,24 @@ router.post('/find_data', function (req, res, next) {
         email: req.body.email
     }, function (err, result) {
         if (err) {
-            //console.log(err);
-            res.json(err);
+            if (res.status(500)) {
+                res.send({
+                    'error': true,
+                    'message': 'INTERNAL SERVER ERROR'
+                });
+            } else if (res.status(400)) {
+                res.send({
+                    'error': true,
+                    'message': 'SESSION EXPIRED'
+                });
+            }
+            else{
+                res.send({
+                    'error': true,
+                    'message': 'Server error occured'
+                });
+            }
+            //res.send(err);
         }
         else if(!result) {
             //console.log(result);

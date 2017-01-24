@@ -40,29 +40,23 @@ export class LoginComponent implements OnInit {
 
         //console.log(result);
 
-        
-                result.subscribe(loginUsers => {
-        
-                    this.loginUsers = loginUsers;
-        
-                    if (loginUsers == null) {
-                        alert("Please enter correct data");
-                        username.value = "";
-                        password.value = "";
-                    }
-                    else {
-                        this.savedUser.users_logged = "" + loginUsers.text;
-        
-                        localStorage.setItem('host_email', loginUsers.email);
-                        localStorage.setItem('host_name',loginUsers.username);
-        
-                        //console.log(""+loginUsers.email);
-        
-                        this.router.navigate(['/dashboard']);
-                    }
-                });
+
+        result.subscribe(loginUsers => {
+
+            this.loginUsers = loginUsers;
+
+            if (loginUsers == null) {
+                alert("Please enter correct data");
+                username.value = "";
+                password.value = "";
+            }
+            else {
+                this.savedUser.users_logged = "" + loginUsers.text;
+                localStorage.setItem('host_email', loginUsers.email);
+                localStorage.setItem('host_name', loginUsers.username);
+                //console.log(""+loginUsers.email);
+                this.router.navigate(['/dashboard']);
+            }
+        });
     }
-
-
-
 }

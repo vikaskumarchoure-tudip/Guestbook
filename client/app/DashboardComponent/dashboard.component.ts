@@ -28,8 +28,8 @@ export class DashboardComponent implements OnInit {
             visitorname: ['', [Validators.required, Validators.minLength(6)]],
             visitoremail: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
             visitorcontact: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(12)]],
-            visitorintime: ['', [Validators.required,]],
-            visitorouttime: ['', [Validators.required]]
+            visitorindate: ['', [Validators.required,]],
+            visitorintime: ['', [Validators.required]]
         });
 
         //this.user_email = this.savedUser.user_email;
@@ -53,8 +53,9 @@ export class DashboardComponent implements OnInit {
             visitor_name: visitorname.value,
             visitor_email: visitoremail.value,
             visitor_contact: visitorcontact.value,
-            visitor_intime: visitorintime.value,
-            visitor_outtime: visitorouttime.value,
+            visitor_indate: visitorintime.value,
+            visitor_intime: visitorouttime.value,
+            visitor_outtime: "",
             visitor_host: this.useremail
         };
 
@@ -76,8 +77,8 @@ export class DashboardComponent implements OnInit {
         localStorage.setItem("current_visitor_data_name", saved_data.visitor_name);
         localStorage.setItem("current_visitor_data_email", saved_data.visitor_email);
         localStorage.setItem("current_visitor_data_contact", saved_data.visitor_contact);
+        localStorage.setItem("current_visitor_data_indate", saved_data.visitor_indate);
         localStorage.setItem("current_visitor_data_intime", saved_data.visitor_intime);
-        localStorage.setItem("current_visitor_data_outtime", saved_data.visitor_outtime);
         localStorage.setItem("current_visitor_data_host", saved_data.visitor_host);
         this.router.navigate(['editcomponent']);
     }
