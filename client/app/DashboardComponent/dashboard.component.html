@@ -24,8 +24,13 @@
             <table>
                 <tr>
                     <td>
-                        <input class="form-control input-lg" formControlName="visitorname" placeholder="Visitor Name..." autofocus #visitorname></td>
-                    <td><input class="form-control input-lg" formControlName="visitoremail" placeholder="Visitor Email..." #visitoremail></td>
+                        <div *ngIf="dashboardForm.controls.visitorname.hasError('minlength')"> Visitor Name is Required </div>
+                        <div *ngIf="dashboardForm.controls.visitorname.hasError('pattern')">Field must only have characters</div>
+                        <input class="form-control input-lg" formControlName="visitorname" placeholder="Visitor Name..." autofocus #visitorname>
+                    </td>
+                    <td>
+                        <input class="form-control input-lg" formControlName="visitoremail" placeholder="Visitor Email..." #visitoremail>
+                    </td>
                     <td>
                         <input class="form-control input-lg" formControlName="visitorcontact" placeholder="Visitor Contact..." #visitorcontact></td>
                     <td>

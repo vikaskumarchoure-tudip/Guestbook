@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { TodosComponent } from './components/todos.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -16,7 +15,7 @@ import { EditComponent } from './EditComponent/edit.component';
   imports: [BrowserModule, HttpModule, BrowserModule, FormsModule, ReactiveFormsModule,
     RouterModule.forRoot(ContactRoutes)
   ],
-  declarations: [AppComponent, TodosComponent, LoginComponent, RegisterComponent, DashboardComponent,EditComponent],
+  declarations: [AppComponent, LoginComponent, RegisterComponent, DashboardComponent,EditComponent],
   bootstrap: [AppComponent],
 
 })

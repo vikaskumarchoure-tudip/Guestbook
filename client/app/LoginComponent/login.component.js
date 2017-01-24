@@ -53,7 +53,7 @@ var LoginComponent = (function () {
                 localStorage.setItem('host_email', loginUsers.email);
                 localStorage.setItem('host_name', loginUsers.username);
                 //console.log(""+loginUsers.email);
-                _this.router.navigate(['dashboard']);
+                _this.router.navigate(['/dashboard']);
             }
         });
     };

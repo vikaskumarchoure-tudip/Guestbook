@@ -3,7 +3,9 @@ var router = express.Router();
 var mongojs = require('mongojs');
 var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
-var db = mongojs('mongodb://admin:admin@ds055565.mlab.com:55565/guestbook', ['users_datas']);
+var dbpath = require('../database/database');
+var db = mongojs(dbpath.database,['users_datas']);
+//var db = mongojs('mongodb://admin:admin@ds055565.mlab.com:55565/guestbook', ['users_datas']);
 
 router.get('/users_datas', function (req, res, next) {
 

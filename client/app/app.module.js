@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
-var todos_component_1 = require("./components/todos.component");
 var forms_1 = require("@angular/forms");
 var forms_2 = require("@angular/forms");
 var router_1 = require("@angular/router");
@@ -28,7 +27,7 @@ AppModule = __decorate([
         imports: [platform_browser_1.BrowserModule, http_1.HttpModule, platform_browser_1.BrowserModule, forms_1.FormsModule, forms_2.ReactiveFormsModule,
             router_1.RouterModule.forRoot(users_routing_1.ContactRoutes)
         ],
-        declarations: [app_component_1.AppComponent, todos_component_1.TodosComponent, login_component_1.LoginComponent, register_component_1.RegisterComponent, dashboard_component_1.DashboardComponent, edit_component_1.EditComponent],
+        declarations: [app_component_1.AppComponent, login_component_1.LoginComponent, register_component_1.RegisterComponent, dashboard_component_1.DashboardComponent, edit_component_1.EditComponent],
         bootstrap: [app_component_1.AppComponent],
     })
 ], AppModule);

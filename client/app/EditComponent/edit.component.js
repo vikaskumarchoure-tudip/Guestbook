@@ -12,11 +12,13 @@ var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var dashboard_service_1 = require("../services/dashboard.service");
 var router_1 = require("@angular/router");
+var edit_service_1 = require("../services/edit.service");
 var EditComponent = (function () {
-    function EditComponent(formBuilder, dashService, router) {
+    function EditComponent(formBuilder, dashService, router, editService) {
         this.formBuilder = formBuilder;
         this.dashService = dashService;
         this.router = router;
+        this.editService = editService;
         this.username = localStorage.getItem("host_email");
     }
     EditComponent.prototype.ngOnInit = function () {
@@ -46,6 +48,12 @@ var EditComponent = (function () {
             visitor_host: this.username
         };
         result = this.dashService.editSavedDatas(visitor_data);
+        localStorage.removeItem("current_visitor_data_name");
+        localStorage.removeItem("current_visitor_data_email");
+        localStorage.removeItem("current_visitor_data_contact");
+        localStorage.removeItem("current_visitor_data_intime");
+        localStorage.removeItem("current_visitor_data_outtime");
+        localStorage.removeItem("current_visitor_data_host");
         this.router.navigate(['dashboard']);
     };
     return EditComponent;
@@ -54,9 +62,9 @@ EditComponent = __decorate([
     core_1.Component({
         selector: 'edit-comp',
         templateUrl: './app/EditComponent/edit.component.html',
-        providers: [dashboard_service_1.DashboardService]
+        providers: [dashboard_service_1.DashboardService, edit_service_1.EditService]
     }),
-    __metadata("design:paramtypes", [forms_1.FormBuilder, dashboard_service_1.DashboardService, router_1.Router])
+    __metadata("design:paramtypes", [forms_1.FormBuilder, dashboard_service_1.DashboardService, router_1.Router, edit_service_1.EditService])
 ], EditComponent);
 exports.EditComponent = EditComponent;
 //# sourceMappingURL=edit.component.js.map

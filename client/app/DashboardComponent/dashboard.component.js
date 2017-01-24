@@ -28,7 +28,7 @@ var DashboardComponent = (function () {
             visitorname: ['', [forms_1.Validators.required, forms_1.Validators.minLength(6)]],
             visitoremail: ['', [forms_1.Validators.required, forms_1.Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
             visitorcontact: ['', [forms_1.Validators.required, forms_1.Validators.minLength(10), forms_1.Validators.maxLength(12)]],
-            visitorintime: ['', [forms_1.Validators.required]],
+            visitorintime: ['', [forms_1.Validators.required,]],
             visitorouttime: ['', [forms_1.Validators.required]]
         });
         //this.user_email = this.savedUser.user_email;

@@ -11,33 +11,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/map");
-var DashboardService = (function () {
-    function DashboardService(_http) {
+var EditService = (function () {
+    function EditService(_http) {
         this._http = _http;
     }
-    DashboardService.prototype.getSavedDatas = function (visitor_uq) {
-        var headers = new http_1.Headers();
-        headers.append("content-type", "application/json");
-        return this._http.post('api/v1/visitor_datauq', JSON.stringify(visitor_uq), { headers: headers }).map(function (res) { return res.json(); });
-    };
-    DashboardService.prototype.setSavedDatas = function (dash_data) {
-        var headers = new http_1.Headers();
-        headers.append("content-type", "application/json");
-        return this._http.post('api/v1/visitor_data', JSON.stringify(dash_data), { headers: headers }).map(function (res) { return res.json(); });
-    };
-    DashboardService.prototype.editSavedDatas = function (dash_data) {
+    EditService.prototype.editSavedDatas = function (dash_data) {
         var headers = new http_1.Headers();
         headers.append("content-type", "application/json");
         return this._http.post('api/v1/visitors', JSON.stringify(dash_data), { headers: headers }).map(function (res) { return res.json(); });
     };
-    DashboardService.prototype.deleteVisitor = function (id) {
-        return this._http.delete('/api/v1/visitor_data/' + id).map(function (res) { return res.json(); });
-    };
-    return DashboardService;
+    return EditService;
 }());
-DashboardService = __decorate([
+EditService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http])
-], DashboardService);
-exports.DashboardService = DashboardService;
-//# sourceMappingURL=dashboard.service.js.map
+], EditService);
+exports.EditService = EditService;
+//# sourceMappingURL=edit.service.js.map

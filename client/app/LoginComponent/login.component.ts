@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
         
                         //console.log(""+loginUsers.email);
         
-                        this.router.navigate(['dashboard']);
+                        this.router.navigate(['/dashboard']);
                     }
                 });
     }

@@ -3,18 +3,19 @@ import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
 import { DashboardService } from '../services/dashboard.service';
 import { DashboardModel } from '../Model/dashboard.model';
 import { Router, RouterModule } from '@angular/router';
+import { EditService } from '../services/edit.service';
 
 @Component({
     selector: 'edit-comp',
     templateUrl: './app/EditComponent/edit.component.html',
-    providers : [DashboardService]
+    providers: [DashboardService, EditService]
 })
 
 export class EditComponent implements OnInit {
 
     editForm: FormGroup;
     username = localStorage.getItem("host_email");
-    constructor(private formBuilder: FormBuilder, private dashService: DashboardService, private router : Router) {}
+    constructor(private formBuilder: FormBuilder, private dashService: DashboardService, private router: Router, private editService: EditService) { }
 
     ngOnInit() {
         var visitor_data_name = localStorage.getItem("current_visitor_data_name");
@@ -31,13 +32,14 @@ export class EditComponent implements OnInit {
                 visitor_contact_edit: [visitor_data_contact, Validators.required],
                 visitor_intime_edit: [visitor_data_intime, Validators.required],
                 visitor_outtime_edit: [visitor_data_outtime, Validators.required]
+
             }
         );
     }
 
     editVisitor(event, visitor_name, visitor_email, visitor_contact, visitor_intime, visitor_outtime) {
         //console.log(visitor_name.value+visitor_email.value+visitor_contact.value+visitor_intime.value+visitor_outtime.value);
-        
+
         var result;
         var visitor_data = {
             visitor_name: visitor_name.value,
@@ -46,10 +48,16 @@ export class EditComponent implements OnInit {
             visitor_intime: visitor_intime.value,
             visitor_outtime: visitor_outtime.value,
             visitor_host: this.username
-        }
+        };
         result = this.dashService.editSavedDatas(visitor_data);
-        
+
+        localStorage.removeItem("current_visitor_data_name");
+        localStorage.removeItem("current_visitor_data_email");
+        localStorage.removeItem("current_visitor_data_contact");
+        localStorage.removeItem("current_visitor_data_intime");
+        localStorage.removeItem("current_visitor_data_outtime");
+        localStorage.removeItem("current_visitor_data_host");
+
         this.router.navigate(['dashboard']);
     }
-
 }

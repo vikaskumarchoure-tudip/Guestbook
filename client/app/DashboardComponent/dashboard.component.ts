@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
             visitorname: ['', [Validators.required, Validators.minLength(6)]],
             visitoremail: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
             visitorcontact: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(12)]],
-            visitorintime: ['', [Validators.required]],
+            visitorintime: ['', [Validators.required,]],
             visitorouttime: ['', [Validators.required]]
         });
 

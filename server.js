@@ -3,7 +3,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var todos = require('./routes/todos');
+
 
 //updated code
 var users_datas = require('./routes/users_datas');
@@ -24,7 +24,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/', index);
 app.use('/api/v1/',users_datas);
-app.use('/api/v1/', todos);
 app.use('/api/v1/',visitor_datas);
 
 app.listen(3000, function(){
