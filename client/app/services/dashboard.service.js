@@ -14,7 +14,14 @@ require("rxjs/add/operator/map");
 var DashboardService = (function () {
     function DashboardService(_http) {
         this._http = _http;
+        console.log('hiiiiiii');
     }
+    DashboardService.prototype.editSavedDatas = function (dash_data) {
+        var headers = new http_1.Headers();
+        headers.append("content-type", "application/json");
+        console.log("It reached here...");
+        return this._http.post('api/v1/visitor_edit', JSON.stringify(dash_data), { headers: headers }).map(function (res) { return res.json(); });
+    };
     DashboardService.prototype.getSavedDatas = function (visitor_uq) {
         var headers = new http_1.Headers();
         headers.append("content-type", "application/json");
@@ -23,14 +30,17 @@ var DashboardService = (function () {
     DashboardService.prototype.setSavedDatas = function (dash_data) {
         var headers = new http_1.Headers();
         headers.append("content-type", "application/json");
+        console.log("The value is: ", this._http.post('api/v1/visitor_data', JSON.stringify(dash_data), { headers: headers }).map(function (res) { return res.json(); }));
         return this._http.post('api/v1/visitor_data', JSON.stringify(dash_data), { headers: headers }).map(function (res) { return res.json(); });
     };
-    DashboardService.prototype.editSavedDatas = function (visitor_edit) {
-        var headers = new http_1.Headers();
-        headers.append("content-type", "application/json");
-        console.log("Reached to dashboard service...");
-        return this._http.put('/api/v1/visitor_edit', JSON.stringify(visitor_edit), { headers: headers }).map(function (res) { return res.json(); });
-    };
+    /*
+        editSavedDatas(visitor_edit) {
+            var headers = new Headers();
+            headers.append("content-type", "application/json");
+            console.log("From Dashboard Form");
+            return this._http.post('api/v1/visitor_edit',JSON.stringify(visitor_edit), {headers: headers}).map(res=>res.json());
+        }
+    */
     DashboardService.prototype.deleteVisitor = function (id) {
         return this._http.delete('/api/v1/visitor_data/' + id).map(function (res) { return res.json(); });
     };

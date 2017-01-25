@@ -6,4 +6,5 @@ export class DashboardModel {
     visitor_intime:string;
     visitor_outtime:string;
     visitor_host:string;
+    visitor_host_name:string;
 }

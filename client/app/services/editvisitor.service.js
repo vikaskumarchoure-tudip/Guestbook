@@ -11,21 +11,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/map");
-var RegisterService = (function () {
-    function RegisterService(_http) {
+var EditVisitor = (function () {
+    function EditVisitor(_http) {
         this._http = _http;
     }
-    RegisterService.prototype.registerUser = function (regdata) {
-        //console.log(JSON.stringify(regdata));
+    /*
+    editSavedDatas(visitor_edit) {
+            var headers = new Headers();
+            headers.append("content-type", "application/json");
+            return this._http.post('api/v1/visitor_edit',JSON.stringify(visitor_edit), {headers: headers}).map(res=>res.json());
+        }
+     */
+    EditVisitor.prototype.editVisitor = function (visitor_data) {
         var headers = new http_1.Headers();
         headers.append("content-type", "application/json");
-        return this._http.post('api/v1/users_data', JSON.stringify(regdata), { headers: headers }).map(function (res) { return res.json(); });
+        console.log("It reached here...");
+        return this._http.post('edit_data/visitor_edit', JSON.stringify(visitor_data), { headers: headers })
+            .map(function (res) { return res.json(); });
     };
-    return RegisterService;
+    return EditVisitor;
 }());
-RegisterService = __decorate([
+EditVisitor = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http])
-], RegisterService);
-exports.RegisterService = RegisterService;
-//# sourceMappingURL=register.service.js.map
+], EditVisitor);
+exports.EditVisitor = EditVisitor;
+//# sourceMappingURL=editvisitor.service.js.map

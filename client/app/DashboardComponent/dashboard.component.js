@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var dashboard_service_1 = require("../services/dashboard.service");
 var router_1 = require("@angular/router");
+var editvisitor_service_1 = require("../services/editvisitor.service");
 var DashboardComponent = (function () {
     function DashboardComponent(formBuilder, dashboardService, router) {
         this.formBuilder = formBuilder;
@@ -50,9 +51,10 @@ var DashboardComponent = (function () {
             visitor_indate: visitorintime.value,
             visitor_intime: visitorouttime.value,
             visitor_outtime: "",
-            visitor_host: this.useremail
+            visitor_host: this.useremail,
+            visitor_host_name: this.username
         };
-        result = this.dashboardService.setSavedDatas(visitor);
+        result = this.dashboardService.editSavedDatas(visitor);
         result.subscribe(function (x) {
             _this.saved_datas.push(visitor);
         });
@@ -87,6 +89,12 @@ var DashboardComponent = (function () {
             }
         });
     };
+    DashboardComponent.prototype.onClickMe = function () {
+        var data = {
+            name: "Vikas"
+        };
+        var result = this.dashboardService.editSavedDatas(data);
+    };
     DashboardComponent.prototype.onLogOut = function () {
         localStorage.removeItem("host_email");
         localStorage.removeItem("host_name");
@@ -99,7 +107,7 @@ DashboardComponent = __decorate([
         moduleId: module.id,
         selector: 'dashboard-form',
         templateUrl: './dashboard.component.html',
-        providers: [dashboard_service_1.DashboardService]
+        providers: [dashboard_service_1.DashboardService, editvisitor_service_1.EditVisitor]
     }),
     __metadata("design:paramtypes", [forms_1.FormBuilder, dashboard_service_1.DashboardService, router_1.Router])
 ], DashboardComponent);

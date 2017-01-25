@@ -38,6 +38,35 @@ router.get('/visitor_datas', function (req, res, next) {
 //get specific data
 router.post('/visitor_datauq', function (req, res, next) {
     var visitors = req.body;
+    //if the logged user is admin
+    if(req.body.visitor_host == "admin@gmail.com"){
+        db.visitor_datas.find(function (err, datas) {
+        if (err) {
+            if (res.status(500)) {
+                res.send({
+                    'error': true,
+                    'message': 'INTERNAL SERVER ERROR'
+                });
+            } else if (res.status(400)) {
+                res.send({
+                    'error': true,
+                    'message': 'SESSION EXPIRED'
+                });
+            } else {
+                res.send({
+                    'error': true,
+                    'message': 'Server error occured'
+                });
+            }
+            //res.send(err);
+        } else {
+
+            res.json(datas);
+        }
+    });
+    }
+    else{
+    //data on receptionist login starts here
     db.visitor_datas.find({
         visitor_host: visitors.visitor_host
     }, function (err, datas) {
@@ -64,11 +93,13 @@ router.post('/visitor_datauq', function (req, res, next) {
             res.json(datas);
         }
     });
-
+//data on rececptionist login ends here
+}
 });
 
 //save visitors
 router.post('/visitor_data', function (req, res, next) {
+ 
     var visitors = req.body;
     db.visitor_datas.save(visitors, function (err, result) {
         if (err) {
@@ -96,10 +127,16 @@ router.post('/visitor_data', function (req, res, next) {
 
 });
 
+
+
+
 //update visitors
-router.put('/visitor_edit', function (req, res, err) {
+router.post('/visitor_edit', function (req, res, err) {
     console.log("You reached here...");
+    res.send("Here is the response");
 });
+
+
 
 
 //delete visitors

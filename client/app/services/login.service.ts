@@ -10,11 +10,11 @@ export class LoginService {
 
     }
 
-    checkLogin(todos) {
+    checkLogin(login_data) {
         var headers = new Headers();
         headers.append("content-type", "application/json");
 
-        return this._http.post('api/v1/find_data', JSON.stringify(todos), { headers: headers }).map(res => res.json());
+        return this._http.post('api/v1/find_data', JSON.stringify(login_data), { headers: headers }).map(res => res.json());
     }
 
 }

@@ -44,6 +44,8 @@ export class LoginComponent implements OnInit {
 
             this.loginUsers = loginUsers;
 
+            
+
             if (loginUsers == null) {
                 alert("Please enter correct data");
                 username.value = "";

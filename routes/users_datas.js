@@ -4,7 +4,7 @@ var mongojs = require('mongojs');
 var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
 var dbpath = require('../database/database');
-var db = mongojs(dbpath.database,['users_datas']);
+var db = mongojs(dbpath.database, ['users_datas']);
 //var db = mongojs('mongodb://admin:admin@ds055565.mlab.com:55565/guestbook', ['users_datas']);
 
 router.get('/users_datas', function (req, res, next) {
@@ -21,8 +21,7 @@ router.get('/users_datas', function (req, res, next) {
                     'error': true,
                     'message': 'SESSION EXPIRED'
                 });
-            }
-            else{
+            } else {
                 res.send({
                     'error': true,
                     'message': 'Server error occured'
@@ -53,8 +52,7 @@ router.post('/users_data', function (req, res, next) {
                     'error': true,
                     'message': 'SESSION EXPIRED'
                 });
-            }
-            else{
+            } else {
                 res.send({
                     'error': true,
                     'message': 'Server error occured'
@@ -62,7 +60,7 @@ router.post('/users_data', function (req, res, next) {
             }
             //res.send(err);
         } else {
-            console.log(hash);
+            //console.log(hash);
         }
 
         //console.log(data.password);
@@ -73,25 +71,24 @@ router.post('/users_data', function (req, res, next) {
             password: hash
         }, function (err, result) {
             if (err) {
-            if (res.status(500)) {
-                res.send({
-                    'error': true,
-                    'message': 'INTERNAL SERVER ERROR'
-                });
-            } else if (res.status(400)) {
-                res.send({
-                    'error': true,
-                    'message': 'SESSION EXPIRED'
-                });
-            }
-            else{
-                res.send({
-                    'error': true,
-                    'message': 'Server error occured'
-                });
-            }
-            //res.send(err);
-        } else {
+                if (res.status(500)) {
+                    res.send({
+                        'error': true,
+                        'message': 'INTERNAL SERVER ERROR'
+                    });
+                } else if (res.status(400)) {
+                    res.send({
+                        'error': true,
+                        'message': 'SESSION EXPIRED'
+                    });
+                } else {
+                    res.send({
+                        'error': true,
+                        'message': 'Server error occured'
+                    });
+                }
+                //res.send(err);
+            } else {
                 res.json("Response is coming");
             }
         });
@@ -132,8 +129,6 @@ router.post('/find_data', function (req, res, next) {
     var todo = req.body;
     //console.log(req.body.text+" "+req.body.name);
 
-
-
     db.users_datas.findOne({
         email: req.body.email
     }, function (err, result) {
@@ -148,31 +143,26 @@ router.post('/find_data', function (req, res, next) {
                     'error': true,
                     'message': 'SESSION EXPIRED'
                 });
-            }
-            else{
+            } else {
                 res.send({
                     'error': true,
                     'message': 'Server error occured'
                 });
             }
             //res.send(err);
-        }
-        else if(!result) {
+        } else if (!result) {
             //console.log(result);
             res.json('User not found');
-        }
-        else {
-            bcrypt.compare(req.body.password, result.password, function(err, user){
-                        if(err) {
-                            console.log(err)
-                        }
-                        else if(!user) {
-                            res.send('wrong password');
-                        }
-                        else {
-                            res.send(result);
-                            //console.log("success pass is found");
-                        } 
+        } else {
+            bcrypt.compare(req.body.password, result.password, function (err, user) {
+                if (err) {
+                    console.log(err)
+                } else if (!user) {
+                    res.send('wrong password');
+                } else {
+                    res.send(result);
+                    //console.log("success pass is found");
+                }
             });
         }
     });

@@ -11,6 +11,7 @@ var dashboard = require('./routes/dashboard');
 var editvisitor = require('./routes/editvisitor');
 var users_datas = require('./routes/users_datas');
 var visitor_datas = require('./routes/visitor_datas');
+var edit_data = require('./routes/edit_data');
 //updated code finish here
 
 var app = express();
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use('/', index);
 app.use('/',dashboard);
 app.use('/',editvisitor);
+app.use('/edit_data',edit_data);
 app.use('/api/v1/',users_datas);
 app.use('/api/v1/',visitor_datas);
 

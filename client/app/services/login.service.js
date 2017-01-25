@@ -15,10 +15,10 @@ var LoginService = (function () {
     function LoginService(_http) {
         this._http = _http;
     }
-    LoginService.prototype.checkLogin = function (todos) {
+    LoginService.prototype.checkLogin = function (login_data) {
         var headers = new http_1.Headers();
         headers.append("content-type", "application/json");
-        return this._http.post('api/v1/find_data', JSON.stringify(todos), { headers: headers }).map(function (res) { return res.json(); });
+        return this._http.post('api/v1/find_data', JSON.stringify(login_data), { headers: headers }).map(function (res) { return res.json(); });
     };
     return LoginService;
 }());

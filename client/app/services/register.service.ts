@@ -11,7 +11,7 @@ export class RegisterService{
     }
 
     registerUser(regdata){
-        console.log(JSON.stringify(regdata));
+        //console.log(JSON.stringify(regdata));
         var headers = new Headers();
         headers.append("content-type","application/json");
         return this._http.post('api/v1/users_data',JSON.stringify(regdata),{headers:headers}).map(res => res.json());

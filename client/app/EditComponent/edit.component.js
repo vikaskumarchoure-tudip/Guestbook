@@ -12,12 +12,14 @@ var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var dashboard_service_1 = require("../services/dashboard.service");
 var router_1 = require("@angular/router");
+var editvisitor_service_1 = require("../services/editvisitor.service");
 var EditComponent = (function () {
-    function EditComponent(formBuilder, dashService, router) {
+    function EditComponent(formBuilder, dashService, editService, router) {
         this.formBuilder = formBuilder;
         this.dashService = dashService;
+        this.editService = editService;
         this.router = router;
-        this.username = localStorage.getItem("host_email");
+        this.useremail = localStorage.getItem("host_email");
     }
     EditComponent.prototype.ngOnInit = function () {
         var visitor_data_name = localStorage.getItem("current_visitor_data_name");
@@ -45,27 +47,35 @@ var EditComponent = (function () {
             visitor_indate: visitor_indate.value,
             visitor_intime: visitor_intime.value,
             visitor_outtime: visitor_outtime.value,
-            visitor_host: this.username
+            visitor_host: this.useremail
         };
+        //console.log("the data is : " + visitor_data);
         result = this.dashService.editSavedDatas(visitor_data);
-        localStorage.removeItem("current_visitor_data_name");
-        localStorage.removeItem("current_visitor_data_email");
-        localStorage.removeItem("current_visitor_data_contact");
-        localStorage.removeItem("current_visitor_data_indate");
-        localStorage.removeItem("current_visitor_data_intime");
-        localStorage.removeItem("current_visitor_data_host");
-        //console.log(visitor_name.value+","+visitor_email.value+","+visitor_contact.value+","+visitor_indate.value+","+visitor_intime.value+","+visitor_outtime.value);
-        this.router.navigate(['dashboard']);
+        result.subscribe(function (x) {
+            console.log(x);
+        });
+        //var res = this.editService.editVisitor(visitor_data);
+        /*
+                localStorage.removeItem("current_visitor_data_name");
+                localStorage.removeItem("current_visitor_data_email");
+                localStorage.removeItem("current_visitor_data_contact");
+                localStorage.removeItem("current_visitor_data_indate");
+                localStorage.removeItem("current_visitor_data_intime");
+                localStorage.removeItem("current_visitor_data_host");
+                //console.log(visitor_name.value+","+visitor_email.value+","+visitor_contact.value+","+visitor_indate.value+","+visitor_intime.value+","+visitor_outtime.value);
+                this.router.navigate(['dashboard']);
+        */
     };
     return EditComponent;
 }());
 EditComponent = __decorate([
     core_1.Component({
+        moduleId: module.id,
         selector: 'edit-comp',
-        templateUrl: './app/EditComponent/edit.component.html',
-        providers: [dashboard_service_1.DashboardService]
+        templateUrl: './edit.component.html',
+        providers: [editvisitor_service_1.EditVisitor, dashboard_service_1.DashboardService]
     }),
-    __metadata("design:paramtypes", [forms_1.FormBuilder, dashboard_service_1.DashboardService, router_1.Router])
+    __metadata("design:paramtypes", [forms_1.FormBuilder, dashboard_service_1.DashboardService, editvisitor_service_1.EditVisitor, router_1.Router])
 ], EditComponent);
 exports.EditComponent = EditComponent;
 //# sourceMappingURL=edit.component.js.map

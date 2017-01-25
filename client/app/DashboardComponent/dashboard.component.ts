@@ -4,11 +4,13 @@ import { DashboardService } from '../services/dashboard.service';
 import { DashboardModel } from '../Model/dashboard.model';
 import { DashboardModelUq } from '../Model/dashboard.modeluq';
 import { Router, RouterModule } from '@angular/router';
+import { EditVisitor } from '../services/editvisitor.service';
+
 @Component({
     moduleId: module.id,
     selector: 'dashboard-form',
     templateUrl: './dashboard.component.html',
-    providers: [DashboardService]
+    providers: [DashboardService, EditVisitor]
 })
 
 export class DashboardComponent implements OnInit {
@@ -18,7 +20,7 @@ export class DashboardComponent implements OnInit {
     dashboardForm: FormGroup;
     useremail = localStorage.getItem("host_email");
     username = localStorage.getItem("host_name");
-    constructor( private formBuilder: FormBuilder, private dashboardService: DashboardService, private router: Router) { }
+    constructor(private formBuilder: FormBuilder, private dashboardService: DashboardService, private router: Router) { }
 
 
     ngOnInit() {
@@ -55,11 +57,11 @@ export class DashboardComponent implements OnInit {
             visitor_indate: visitorintime.value,
             visitor_intime: visitorouttime.value,
             visitor_outtime: "",
-            visitor_host: this.useremail
+            visitor_host: this.useremail,
+            visitor_host_name: this.username
         };
 
-        result = this.dashboardService.setSavedDatas(visitor);
-
+        result = this.dashboardService.editSavedDatas(visitor);
         result.subscribe(x => {
             this.saved_datas.push(visitor);
         });
@@ -84,6 +86,7 @@ export class DashboardComponent implements OnInit {
 
     //delete visitor
     deleteVisitor(saved_data) {
+
         var saved_datas = this.saved_datas;
         console.log(saved_data._id);
 
@@ -97,6 +100,13 @@ export class DashboardComponent implements OnInit {
             }
         });
 
+    }
+
+    onClickMe() {
+        var data = {
+            name: "Vikas"
+        }
+        var result = this.dashboardService.editSavedDatas(data);
     }
 
     onLogOut() {
