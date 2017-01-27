@@ -47,13 +47,15 @@ var EditComponent = (function () {
             visitor_indate: visitor_indate.value,
             visitor_intime: visitor_intime.value,
             visitor_outtime: visitor_outtime.value,
-            visitor_host: this.useremail
+            visitor_host: this.useremail,
+            visitor_host_name: localStorage.getItem("host_name")
         };
         //console.log("the data is : " + visitor_data);
         result = this.dashService.editSavedDatas(visitor_data);
         result.subscribe(function (x) {
-            console.log(x);
+            //console.log(x);
         });
+        this.router.navigate(['dashboard']);
         //var res = this.editService.editVisitor(visitor_data);
         /*
                 localStorage.removeItem("current_visitor_data_name");

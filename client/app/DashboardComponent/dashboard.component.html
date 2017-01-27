@@ -12,7 +12,44 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <a class="navbar-brand" (click)="onLogOut()">Sign Out</a>
+                <li class="padding"><button data-toggle="modal" (click)="searchVisitor($event, searchvisitor)" data-target="#searchModal"><i class="glyphicon glyphicon-search"></i></button><input
+                        type="text" class="input-lg" autofocus #searchvisitor></li>
+                <!-- Modal starts here -->
+                <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="searchModal">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="container col-md-12">
+                                    <h3>Searched Visitors</h3>
+                                    <table class="table table-condensed table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Contact</th>
+                                                <th>Check-In Time</th>
+                                                <th>Check-In Date</th>
+                                                <th>Check-Out Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of searched_data">
+                                                <td>{{data.visitor_name}}</td>
+                                                <td>{{data.visitor_email}}</td>
+                                                <td>{{data.visitor_contact}}</td>
+                                                <td>{{data.visitor_intime}}</td>
+                                                <td>{{data.visitor_indate}}</td>
+                                                <td>{{data.visitor_outtime}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal ends here -->
+                <li><a class="navbar-brand" (click)="onLogOut()">Sign Out</a></li>
             </ul>
         </div>
     </div>

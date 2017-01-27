@@ -54,7 +54,7 @@ var DashboardComponent = (function () {
             visitor_host: this.useremail,
             visitor_host_name: this.username
         };
-        result = this.dashboardService.editSavedDatas(visitor);
+        result = this.dashboardService.setSavedDatas(visitor);
         result.subscribe(function (x) {
             _this.saved_datas.push(visitor);
         });
@@ -89,11 +89,16 @@ var DashboardComponent = (function () {
             }
         });
     };
-    DashboardComponent.prototype.onClickMe = function () {
-        var data = {
-            name: "Vikas"
-        };
-        var result = this.dashboardService.editSavedDatas(data);
+    DashboardComponent.prototype.searchVisitor = function (event, search_data) {
+        //console.log("ans is ",this.saved_datas[3].visitor_name.search("Prashant"));
+        var _this = this;
+        this.searched_data = [];
+        this.saved_datas.forEach(function (element) {
+            if (element.visitor_name.search(search_data.value) == 0) {
+                _this.searched_data.push(element);
+            }
+        });
+        //console.log("The return ans is ",this.searched_data);
     };
     DashboardComponent.prototype.onLogOut = function () {
         localStorage.removeItem("host_email");

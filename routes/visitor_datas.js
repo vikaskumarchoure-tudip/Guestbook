@@ -40,7 +40,7 @@ router.post('/visitor_datauq', function (req, res, next) {
     var visitors = req.body;
     //if the logged user is admin
     if(req.body.visitor_host == "admin@gmail.com"){
-        db.visitor_datas.find(function (err, datas) {
+        db.visitor_datas.find().sort({visitor_host:1},function (err, datas) {
         if (err) {
             if (res.status(500)) {
                 res.send({
@@ -132,8 +132,12 @@ router.post('/visitor_data', function (req, res, next) {
 
 //update visitors
 router.post('/visitor_edit', function (req, res, err) {
-    console.log("You reached here...");
-    res.send("Here is the response");
+    
+    db.visitor_datas.update(
+        {visitor_email : req.body.visitor_email},
+        {$set:req.body}
+    );
+
 });
 
 

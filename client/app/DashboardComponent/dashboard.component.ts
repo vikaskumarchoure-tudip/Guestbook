@@ -16,6 +16,7 @@ import { EditVisitor } from '../services/editvisitor.service';
 export class DashboardComponent implements OnInit {
 
     saved_datas: DashboardModel[];
+    searched_data : DashboardModel[];
     ret_datas: DashboardModelUq[];
     dashboardForm: FormGroup;
     useremail = localStorage.getItem("host_email");
@@ -61,7 +62,7 @@ export class DashboardComponent implements OnInit {
             visitor_host_name: this.username
         };
 
-        result = this.dashboardService.editSavedDatas(visitor);
+        result = this.dashboardService.setSavedDatas(visitor);
         result.subscribe(x => {
             this.saved_datas.push(visitor);
         });
@@ -102,11 +103,20 @@ export class DashboardComponent implements OnInit {
 
     }
 
-    onClickMe() {
-        var data = {
-            name: "Vikas"
-        }
-        var result = this.dashboardService.editSavedDatas(data);
+    searchVisitor(event, search_data){
+        //console.log("ans is ",this.saved_datas[3].visitor_name.search("Prashant"));
+
+        this.searched_data = [];
+        
+        this.saved_datas.forEach(element => {
+            
+            if(element.visitor_name.search(search_data.value) == 0){
+                this.searched_data.push(element);
+            }
+            
+        });
+
+        //console.log("The return ans is ",this.searched_data);
     }
 
     onLogOut() {

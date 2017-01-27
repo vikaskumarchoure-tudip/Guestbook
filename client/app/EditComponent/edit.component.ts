@@ -50,13 +50,17 @@ export class EditComponent implements OnInit {
             visitor_indate: visitor_indate.value,
             visitor_intime: visitor_intime.value,
             visitor_outtime: visitor_outtime.value,
-            visitor_host: this.useremail
+            visitor_host: this.useremail,
+            visitor_host_name: localStorage.getItem("host_name")
         };
         //console.log("the data is : " + visitor_data);
         result = this.dashService.editSavedDatas(visitor_data);
-         result.subscribe(x => {
-            console.log(x);
+
+        result.subscribe(x => {
+            //console.log(x);
         });
+
+        this.router.navigate(['dashboard']);
         //var res = this.editService.editVisitor(visitor_data);
 
         /*
