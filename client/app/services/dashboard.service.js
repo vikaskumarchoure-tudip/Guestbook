@@ -15,21 +15,25 @@ var DashboardService = (function () {
     function DashboardService(_http) {
         this._http = _http;
     }
+    //editing the visitors data
     DashboardService.prototype.editSavedData = function (dash_data) {
         var headers = new http_1.Headers();
         headers.append("content-type", "application/json");
         return this._http.post('api/v1/visitor_edit', JSON.stringify(dash_data), { headers: headers }).map(function (res) { return res.json(); });
     };
+    //getting the visitors data
     DashboardService.prototype.getSavedData = function (visitor_unique) {
         var headers = new http_1.Headers();
         headers.append("content-type", "application/json");
         return this._http.post('api/v1/visitor_data_unique', JSON.stringify(visitor_unique), { headers: headers }).map(function (res) { return res.json(); });
     };
+    //saving the visitors data
     DashboardService.prototype.setSavedData = function (dash_data) {
         var headers = new http_1.Headers();
         headers.append("content-type", "application/json");
         return this._http.post('api/v1/visitor_data', JSON.stringify(dash_data), { headers: headers }).map(function (res) { return res.json(); });
     };
+    //deleting the visitors data
     DashboardService.prototype.deleteVisitor = function (id) {
         return this._http.delete('/api/v1/visitor_data/' + id).map(function (res) { return res.json(); });
     };

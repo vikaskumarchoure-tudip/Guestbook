@@ -18,6 +18,7 @@ var RegisterComponent = (function () {
         this.submitted = false;
         this.title = "Register";
     }
+    //Register component loads
     RegisterComponent.prototype.ngOnInit = function () {
         this.registerForm = this.formBuilder.group({
             username: ['', forms_1.Validators.required],
@@ -25,22 +26,28 @@ var RegisterComponent = (function () {
             confpassword: ['', [forms_1.Validators.required, forms_1.Validators.minLength(6)]]
         });
     };
+    //Register button click handler
     RegisterComponent.prototype.registerUser = function (event, username, email, password) {
         var _this = this;
         var result;
         this.newUsers = [];
         var newUser = {
-            username: username.value,
-            email: email.value,
-            password: password.value
+            username: username.value.toString().trim(),
+            email: email.value.toString().trim(),
+            password: password.value.toString().trim()
         };
         result = this.registerService.registerUser(newUser);
         result.subscribe(function (x) {
             _this.newUsers.push(newUser);
             if (!newUser) {
+                //if the data is invalid
                 alert("Enter valid data");
+                username.value = "";
+                email.value = "";
+                password.value = "";
             }
             else {
+                //if the user is registered succesfully
                 alert("Registered Succesfully");
             }
             username.value = "";

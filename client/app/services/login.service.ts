@@ -10,6 +10,7 @@ export class LoginService {
 
     }
 
+//checking if the email and password is valid or not
     checkLogin(login_data) {
         var headers = new Headers();
         headers.append("content-type", "application/json");

@@ -15,6 +15,7 @@ var LoginService = (function () {
     function LoginService(_http) {
         this._http = _http;
     }
+    //checking if the email and password is valid or not
     LoginService.prototype.checkLogin = function (login_data) {
         var headers = new http_1.Headers();
         headers.append("content-type", "application/json");

@@ -39,31 +39,34 @@ router.post('/visitor_data_unique', function (req, res, next) {
         //data on receptionist login starts here
         db.visitor_data.find({
             visitor_host: visitors.visitor_host
-        }).sort({visitor_indate : -1 , visitor_intime : -1},
-        function (err, data) {
-            if (err) {
-                if (res.status(500)) {
-                    res.send({
-                        'error': true,
-                        'message': 'INTERNAL SERVER ERROR'
-                    });
-                } else if (res.status(400)) {
-                    res.send({
-                        'error': true,
-                        'message': 'SESSION EXPIRED'
-                    });
+        }).sort({
+                visitor_indate: -1,
+                visitor_intime: -1
+            },
+            function (err, data) {
+                if (err) {
+                    if (res.status(500)) {
+                        res.send({
+                            'error': true,
+                            'message': 'INTERNAL SERVER ERROR'
+                        });
+                    } else if (res.status(400)) {
+                        res.send({
+                            'error': true,
+                            'message': 'SESSION EXPIRED'
+                        });
+                    } else {
+                        res.send({
+                            'error': true,
+                            'message': 'Server error occured'
+                        });
+                    }
+                    //res.send(err);
                 } else {
-                    res.send({
-                        'error': true,
-                        'message': 'Server error occured'
-                    });
-                }
-                //res.send(err);
-            } else {
 
-                res.json(data);
-            }
-        });
+                    res.json(data);
+                }
+            });
         //data on rececptionist login ends here
     }
 });
@@ -98,9 +101,6 @@ router.post('/visitor_data', function (req, res, next) {
 
 });
 
-
-
-
 //update visitors
 router.post('/visitor_edit', function (req, res, err) {
 
@@ -111,9 +111,6 @@ router.post('/visitor_edit', function (req, res, err) {
     });
 
 });
-
-
-
 
 //delete visitors
 router.delete('/visitor_data/:id', function (req, res, next) {

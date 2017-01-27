@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
     user_email = '';
     constructor(private formBuilder: FormBuilder, private loginService: LoginService, private router: Router) { }
 
+//Login component loads
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
             username: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
@@ -27,26 +28,20 @@ export class LoginComponent implements OnInit {
         });
     }
 
+//Login button click event handler
     onLogin(event, username, password) {
         var result;
         this.loginUsers = [];
         var userDetail = {
-            email: username.value,
-            password: password.value
+            email: username.value.toString().trim(),
+            password: password.value.toString().trim()
         }
 
         result = this.loginService.checkLogin(userDetail);
 
-        //console.log(result);
-
-
         result.subscribe(loginUsers => {
 
             this.loginUsers = loginUsers;
-
-            
-
-            
 
             if (loginUsers.toString() == "User not found") {
                 alert("Please enter correct data");

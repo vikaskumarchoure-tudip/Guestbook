@@ -23,22 +23,23 @@ var LoginComponent = (function () {
         this.logindata = '';
         this.user_email = '';
     }
+    //Login component loads
     LoginComponent.prototype.ngOnInit = function () {
         this.loginForm = this.formBuilder.group({
             username: ['', [forms_1.Validators.required, forms_1.Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
             password: ['', [forms_1.Validators.required, forms_1.Validators.minLength(6)]]
         });
     };
+    //Login button click event handler
     LoginComponent.prototype.onLogin = function (event, username, password) {
         var _this = this;
         var result;
         this.loginUsers = [];
         var userDetail = {
-            email: username.value,
-            password: password.value
+            email: username.value.toString().trim(),
+            password: password.value.toString().trim()
         };
         result = this.loginService.checkLogin(userDetail);
-        //console.log(result);
         result.subscribe(function (loginUsers) {
             _this.loginUsers = loginUsers;
             if (loginUsers.toString() == "User not found") {

@@ -19,6 +19,7 @@ export class EditComponent implements OnInit {
     username = localStorage.getItem("current_visitor_data_host_name");
     constructor(private formBuilder: FormBuilder, private dashService: DashboardService, private editService: EditVisitor, private router: Router) { }
 
+    //edit component loads
     ngOnInit() {
         var visitor_data_name = localStorage.getItem("current_visitor_data_name");
         var visitor_data_email = localStorage.getItem("current_visitor_data_email");
@@ -34,43 +35,49 @@ export class EditComponent implements OnInit {
                 visitor_contact_edit: [visitor_data_contact, Validators.required],
                 visitor_indate_edit: [visitor_data_indate],
                 visitor_intime_edit: [visitor_data_intime, Validators.required],
-                visitor_outtime_edit: ['']
+                visitor_outtime_edit: [new Date().toTimeString().split(" ")[0]]
             }
         );
     }
 
-    editVisitor(event, visitor_name, visitor_email, visitor_contact, visitor_indate, visitor_intime, visitor_outtime) {
+    //edit button click handling
+    editVisitor(event, visitor_name, visitor_email, visitor_contact, visitor_indate, visitor_intime) {
 
         var result;
         var visitor_data = {
-            visitor_name: visitor_name.value,
-            visitor_email: visitor_email.value,
-            visitor_contact: visitor_contact.value,
-            visitor_indate: visitor_indate.value,
-            visitor_intime: visitor_intime.value,
-            visitor_outtime: visitor_outtime.value,
-            //useremail
+            visitor_name: visitor_name.value.toString().trim(),
+            visitor_email: visitor_email.value.toString().trim(),
+            visitor_contact: visitor_contact.value.toString().trim(),
+            visitor_indate: visitor_indate.value.toString().trim(),
+            visitor_intime: visitor_intime.value.toString().trim(),
+            visitor_outtime: new Date().toTimeString().split(" ")[0],
             visitor_host: this.useremail,
-            //username
             visitor_host_name: this.username
         };
 
-        result = this.dashService.editSavedData(visitor_data);
+        if (localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
+            alert("Please Log In to continue");
+            this.router.navigate(['logincomponent']);
+        }
+        else {
+            result = this.dashService.editSavedData(visitor_data);
 
-        result.subscribe(x => {
+            result.subscribe(x => {
 
-        });
+            });
 
-        this.router.navigate(['dashboard']);
+            //deleting all the vistor editable data
+            localStorage.removeItem("current_visitor_data_host");
+            localStorage.removeItem("current_visitor_data_host_name");
+            localStorage.removeItem("current_visitor_data_name");
+            localStorage.removeItem("current_visitor_data_email");
+            localStorage.removeItem("current_visitor_data_contact");
+            localStorage.removeItem("current_visitor_data_indate");
+            localStorage.removeItem("current_visitor_data_intime");
+            localStorage.removeItem("current_visitor_data_host");
 
-        localStorage.removeItem("current_visitor_data_host");
-        localStorage.removeItem("current_visitor_data_host_name");
-        localStorage.removeItem("current_visitor_data_name");
-        localStorage.removeItem("current_visitor_data_email");
-        localStorage.removeItem("current_visitor_data_contact");
-        localStorage.removeItem("current_visitor_data_indate");
-        localStorage.removeItem("current_visitor_data_intime");
-        localStorage.removeItem("current_visitor_data_host");
-
+            //navigating back to the dashboard page
+            this.router.navigate(['dashboard']);
+        }
     }
 }

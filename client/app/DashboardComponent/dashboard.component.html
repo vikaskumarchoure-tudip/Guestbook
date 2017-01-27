@@ -8,12 +8,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand">Welcome {{username}}</a>
+                <li style = "padding:20px;"><a class="navbar-brand">Welcome {{username}}</a></li>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li class="padding"><button data-toggle="modal" (click)="searchVisitor($event, searchvisitor)" data-target="#searchModal"><i class="glyphicon glyphicon-search"></i></button><input
-                        type="text" class="input-lg" autofocus #searchvisitor></li>
+                <li style="padding:20px;"><button data-toggle="modal" (click)="searchVisitor($event, searchvisitor)" data-target="#searchModal"><i class="glyphicon glyphicon-search"></i></button><input
+                        type="text" class="input-lg" placeholder = "Search Visitors" autofocus #searchvisitor></li>
                 <!-- Modal starts here -->
                 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="searchModal">
                     <div class="modal-dialog modal-lg">
@@ -34,7 +34,6 @@
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let data of searched_data">
-                                                <td *ngIf="data == null">No data to display</td>
                                                 <td>{{data.visitor_name}}</td>
                                                 <td>{{data.visitor_email}}</td>
                                                 <td>{{data.visitor_contact}}</td>
@@ -50,7 +49,7 @@
                     </div>
                 </div>
                 <!-- Modal ends here -->
-                <li><a class="navbar-brand" (click)="onLogOut()">Sign Out</a></li>
+                <li style = "padding:20px;"><a class="navbar-brand" (click)="onLogOut()">Sign Out</a></li>
             </ul>
         </div>
     </div>
@@ -71,8 +70,9 @@
                             <div *ngIf="dashboardForm.controls.visitoremail.hasError('pattern')"> Visitor Email is Required </div>
                         </td>
                         <td>
-                            <input type="number" class="form-control input-lg" formControlName="visitorcontact" placeholder="Visitor Contact..." #visitorcontact>
-                            <div *ngIf="( dashboardForm.controls.visitorcontact.hasError('minlength') )"> Enter a valid Contact </div>
+                            <input type="number" class="form-control input-lg" pattern="[1-9][0-9]{9}" formControlName="visitorcontact" placeholder="Visitor Contact..." #visitorcontact>
+                            <div *ngIf="(dashboardForm.controls.visitorcontact.hasError('minlength'))"> Enter a valid Contact </div>
+                            <div *ngIf="(dashboardForm.controls.visitorcontact.hasError('pattern'))">Enter a valid Contact</div>
                         </td>
                         <td>
                             <button type="button" [disabled]="!dashboardForm.valid" (click)="addVisitor($event,visitorname,visitoremail,visitorcontact)"
@@ -90,8 +90,8 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Receptionist Name</th>
                             <th>Visitor Name</th>
+                            <th>Receptionist Name</th>
                             <th>Email</th>
                             <th>Contact No</th>
                             <th>Check In Date</th>
@@ -103,8 +103,8 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let saved_data of saved_datas">
-                            <td>{{saved_data.visitor_host_name}}</td>
                             <td>{{saved_data.visitor_name}}</td>
+                            <td>{{saved_data.visitor_host_name}}</td>
                             <td>{{saved_data.visitor_email}}</td>
                             <td>{{saved_data.visitor_contact}}</td>
                             <td>{{saved_data.visitor_indate}}</td>

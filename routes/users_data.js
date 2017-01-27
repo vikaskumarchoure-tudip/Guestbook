@@ -60,7 +60,7 @@ router.post('/users_data', function (req, res, next) {
     });
 });
 
-//
+//checking the login credentials
 router.post('/find_data', function (req, res, next) {
     var todo = req.body;
 

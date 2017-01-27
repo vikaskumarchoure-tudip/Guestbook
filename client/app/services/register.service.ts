@@ -10,6 +10,7 @@ export class RegisterService{
 
     }
 
+//registering the receptionist
     registerUser(regdata){
         //console.log(JSON.stringify(regdata));
         var headers = new Headers();

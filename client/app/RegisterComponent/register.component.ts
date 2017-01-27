@@ -8,7 +8,7 @@ import { RegisterService } from '../services/register.service';
     providers: [RegisterService]
 })
 
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit {
 
     submitted = false;
     registerForm: FormGroup;
@@ -19,35 +19,42 @@ export class RegisterComponent implements OnInit{
 
     }
 
-    ngOnInit(){
+    //Register component loads
+    ngOnInit() {
 
         this.registerForm = this.formBuilder.group({
             username: ['', Validators.required],
-            password:['',[Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
+            password: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
             confpassword: ['', [Validators.required, Validators.minLength(6)]]
         });
 
     }
 
+    //Register button click handler
     registerUser(event, username, email, password) {
         var result;
         this.newUsers = [];
         var newUser = {
-            username: username.value,
-            email: email.value,
-            password: password.value
+            username: username.value.toString().trim(),
+            email: email.value.toString().trim(),
+            password: password.value.toString().trim()
         }
 
         result = this.registerService.registerUser(newUser);
         result.subscribe(x => {
             this.newUsers.push(newUser);
-            if(!newUser){
+            if (!newUser) {
+                //if the data is invalid
                 alert("Enter valid data");
+                username.value = "";
+                email.value = "";
+                password.value = "";
             }
-            else{
+            else {
+                //if the user is registered succesfully
                 alert("Registered Succesfully");
             }
-            
+
             username.value = "";
             email.value = "";
             password.value = "";

@@ -15,6 +15,7 @@ var RegisterService = (function () {
     function RegisterService(_http) {
         this._http = _http;
     }
+    //registering the receptionist
     RegisterService.prototype.registerUser = function (regdata) {
         //console.log(JSON.stringify(regdata));
         var headers = new http_1.Headers();

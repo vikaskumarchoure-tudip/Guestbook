@@ -5,6 +5,7 @@ var edit_component_1 = require("../EditComponent/edit.component");
 exports.ContactRoutes = [
     { path: 'dashboard', component: dashboard_component_1.DashboardComponent },
     { path: 'editvisitor', component: edit_component_1.EditComponent },
+    { path: 'logincomponent', component: login_component_1.LoginComponent },
     { path: '', component: login_component_1.LoginComponent }
 ];
 //# sourceMappingURL=users.routing.js.map

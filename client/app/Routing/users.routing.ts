@@ -4,6 +4,7 @@ import { EditComponent } from '../EditComponent/edit.component';
 
 export const ContactRoutes = [
   { path: 'dashboard', component: DashboardComponent },
-  { path : 'editvisitor', component: EditComponent },
+  { path: 'editvisitor', component: EditComponent },
+  { path: 'logincomponent', component: LoginComponent },
   { path: '', component: LoginComponent }
 ];

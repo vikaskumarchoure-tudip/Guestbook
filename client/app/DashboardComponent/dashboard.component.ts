@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
         this.dashboardForm = this.formBuilder.group({
             visitorname: ['', [Validators.required, Validators.minLength(6)]],
             visitoremail: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
-            visitorcontact: ['', [Validators.required, Validators.minLength(10)]],
+            visitorcontact: ['', [Validators.required, Validators.minLength(10), Validators.pattern("[1-9][0-9]{9}")]],
         });
 
         var res;
@@ -39,13 +39,14 @@ export class DashboardComponent implements OnInit {
 
     }
 
+    //add visitor
     addVisitor(event, visitorname, visitoremail, visitorcontact) {
         var date = new Date();
         var result;
         var visitor = {
-            visitor_name: visitorname.value,
-            visitor_email: visitoremail.value,
-            visitor_contact: visitorcontact.value,
+            visitor_name: visitorname.value.toString().trim(),
+            visitor_email: visitoremail.value.toString().trim(),
+            visitor_contact: visitorcontact.value.toString().trim(),
             visitor_indate: date.getDate() + "-" + date.getMonth() + 1 + "-" + date.getFullYear(),
             visitor_intime: new Date().toTimeString().split(" ")[0],
             visitor_outtime: "",
@@ -53,10 +54,16 @@ export class DashboardComponent implements OnInit {
             visitor_host_name: this.username
         };
 
-        result = this.dashboardService.setSavedData(visitor);
-        result.subscribe(x => {
-            this.saved_datas.unshift(visitor);
-        });
+        if (localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
+            alert("Please log In to continue");
+            this.router.navigate(['logincomponent']);
+        }
+        else {
+            result = this.dashboardService.setSavedData(visitor);
+            result.subscribe(x => {
+                this.saved_datas.unshift(visitor);
+            });
+        }
         visitorname.value = "";
         visitoremail.value = "";
         visitorcontact.value = "";
@@ -93,8 +100,8 @@ export class DashboardComponent implements OnInit {
 
     }
 
+    //search visitor
     searchVisitor(event, search_data) {
-
         this.searched_data = [];
         var str1 = search_data.value.toLowerCase();
 
@@ -108,11 +115,11 @@ export class DashboardComponent implements OnInit {
 
     }
 
+    //Log Out receptionist
     onLogOut() {
 
         localStorage.removeItem("host_email");
         localStorage.removeItem("host_name");
-
         this.router.navigate(['']);
 
     }

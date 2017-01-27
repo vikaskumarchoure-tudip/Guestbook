@@ -26,7 +26,7 @@ var DashboardComponent = (function () {
         this.dashboardForm = this.formBuilder.group({
             visitorname: ['', [forms_1.Validators.required, forms_1.Validators.minLength(6)]],
             visitoremail: ['', [forms_1.Validators.required, forms_1.Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
-            visitorcontact: ['', [forms_1.Validators.required, forms_1.Validators.minLength(10)]],
+            visitorcontact: ['', [forms_1.Validators.required, forms_1.Validators.minLength(10), forms_1.Validators.pattern("[1-9][0-9]{9}")]],
         });
         var res;
         var visitoruser = {
@@ -35,24 +35,31 @@ var DashboardComponent = (function () {
         this.saved_datas = [];
         this.dashboardService.getSavedData(visitoruser).subscribe(function (saved_data) { _this.saved_datas = saved_data; });
     };
+    //add visitor
     DashboardComponent.prototype.addVisitor = function (event, visitorname, visitoremail, visitorcontact) {
         var _this = this;
         var date = new Date();
         var result;
         var visitor = {
-            visitor_name: visitorname.value,
-            visitor_email: visitoremail.value,
-            visitor_contact: visitorcontact.value,
+            visitor_name: visitorname.value.toString().trim(),
+            visitor_email: visitoremail.value.toString().trim(),
+            visitor_contact: visitorcontact.value.toString().trim(),
             visitor_indate: date.getDate() + "-" + date.getMonth() + 1 + "-" + date.getFullYear(),
             visitor_intime: new Date().toTimeString().split(" ")[0],
             visitor_outtime: "",
             visitor_host: this.useremail,
             visitor_host_name: this.username
         };
-        result = this.dashboardService.setSavedData(visitor);
-        result.subscribe(function (x) {
-            _this.saved_datas.unshift(visitor);
-        });
+        if (localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
+            alert("Please log In to continue");
+            this.router.navigate(['logincomponent']);
+        }
+        else {
+            result = this.dashboardService.setSavedData(visitor);
+            result.subscribe(function (x) {
+                _this.saved_datas.unshift(visitor);
+            });
+        }
         visitorname.value = "";
         visitoremail.value = "";
         visitorcontact.value = "";
@@ -82,6 +89,7 @@ var DashboardComponent = (function () {
             }
         });
     };
+    //search visitor
     DashboardComponent.prototype.searchVisitor = function (event, search_data) {
         var _this = this;
         this.searched_data = [];
@@ -92,6 +100,7 @@ var DashboardComponent = (function () {
             }
         });
     };
+    //Log Out receptionist
     DashboardComponent.prototype.onLogOut = function () {
         localStorage.removeItem("host_email");
         localStorage.removeItem("host_name");
