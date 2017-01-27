@@ -25,27 +25,27 @@ var RegisterComponent = (function () {
             confpassword: ['', [forms_1.Validators.required, forms_1.Validators.minLength(6)]]
         });
     };
-    RegisterComponent.prototype.registerUser = function (event, username, password, cpass) {
+    RegisterComponent.prototype.registerUser = function (event, username, email, password) {
         var _this = this;
         var result;
         this.newUsers = [];
-        var newTodo = {
+        var newUser = {
             username: username.value,
-            email: password.value,
-            password: cpass.value
+            email: email.value,
+            password: password.value
         };
-        result = this.registerService.registerUser(newTodo);
+        result = this.registerService.registerUser(newUser);
         result.subscribe(function (x) {
-            _this.newUsers.push(newTodo);
-            if (!newTodo) {
+            _this.newUsers.push(newUser);
+            if (!newUser) {
                 alert("Enter valid data");
             }
             else {
                 alert("Registered Succesfully");
             }
             username.value = "";
+            email.value = "";
             password.value = "";
-            cpass.value = "";
         });
     };
     return RegisterComponent;

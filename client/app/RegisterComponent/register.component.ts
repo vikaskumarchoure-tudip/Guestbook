@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
-import { RegisterU } from '../Model/register.model';
+import { RegisterUser } from '../Model/register.model';
 import { RegisterService } from '../services/register.service';
 @Component({
     selector: 'register-form',
@@ -13,7 +13,7 @@ export class RegisterComponent implements OnInit{
     submitted = false;
     registerForm: FormGroup;
     title = "Register";
-    newUsers: RegisterU[];
+    newUsers: RegisterUser[];
 
     constructor(private formBuilder: FormBuilder, private registerService: RegisterService) {
 
@@ -29,19 +29,19 @@ export class RegisterComponent implements OnInit{
 
     }
 
-    registerUser(event, username, password, cpass) {
+    registerUser(event, username, email, password) {
         var result;
         this.newUsers = [];
-        var newTodo = {
+        var newUser = {
             username: username.value,
-            email: password.value,
-            password: cpass.value
+            email: email.value,
+            password: password.value
         }
 
-        result = this.registerService.registerUser(newTodo);
+        result = this.registerService.registerUser(newUser);
         result.subscribe(x => {
-            this.newUsers.push(newTodo);
-            if(!newTodo){
+            this.newUsers.push(newUser);
+            if(!newUser){
                 alert("Enter valid data");
             }
             else{
@@ -49,30 +49,9 @@ export class RegisterComponent implements OnInit{
             }
             
             username.value = "";
+            email.value = "";
             password.value = "";
-            cpass.value = "";
         });
     }
 
-    /*
-     todos : Todos[];
-
-    constructor(private todosService : TodosService){
-        
-    }
-    
-    addTodos(event,todoText){
-        var result;
-        var newTodo = {
-            text:todoText.value,
-            isCompleted:false
-        }
-        
-        result = this.todosService.saveTodos(newTodo);
-        result.subscribe(x => {
-            this.todos.push(newTodo);
-            todoText.value = "";
-        });
-    }
-     */
 }

@@ -15,7 +15,8 @@ import { EditVisitor } from '../services/editvisitor.service';
 export class EditComponent implements OnInit {
 
     editForm: FormGroup;
-    useremail = localStorage.getItem("host_email");
+    useremail = localStorage.getItem("current_visitor_data_host");
+    username = localStorage.getItem("current_visitor_data_host_name");
     constructor(private formBuilder: FormBuilder, private dashService: DashboardService, private editService: EditVisitor, private router: Router) { }
 
     ngOnInit() {
@@ -33,14 +34,12 @@ export class EditComponent implements OnInit {
                 visitor_contact_edit: [visitor_data_contact, Validators.required],
                 visitor_indate_edit: [visitor_data_indate],
                 visitor_intime_edit: [visitor_data_intime, Validators.required],
-                visitor_outtime_edit: ['', Validators.required]
-
+                visitor_outtime_edit: ['']
             }
         );
     }
 
     editVisitor(event, visitor_name, visitor_email, visitor_contact, visitor_indate, visitor_intime, visitor_outtime) {
-        //console.log(visitor_name.value+visitor_email.value+visitor_contact.value+visitor_intime.value+visitor_outtime.value);
 
         var result;
         var visitor_data = {
@@ -50,29 +49,28 @@ export class EditComponent implements OnInit {
             visitor_indate: visitor_indate.value,
             visitor_intime: visitor_intime.value,
             visitor_outtime: visitor_outtime.value,
+            //useremail
             visitor_host: this.useremail,
-            visitor_host_name: localStorage.getItem("host_name")
+            //username
+            visitor_host_name: this.username
         };
-        //console.log("the data is : " + visitor_data);
-        result = this.dashService.editSavedDatas(visitor_data);
+
+        result = this.dashService.editSavedData(visitor_data);
 
         result.subscribe(x => {
-            //console.log(x);
+
         });
 
         this.router.navigate(['dashboard']);
-        //var res = this.editService.editVisitor(visitor_data);
 
-        /*
-                localStorage.removeItem("current_visitor_data_name");
-                localStorage.removeItem("current_visitor_data_email");
-                localStorage.removeItem("current_visitor_data_contact");
-                localStorage.removeItem("current_visitor_data_indate");
-                localStorage.removeItem("current_visitor_data_intime");
-                localStorage.removeItem("current_visitor_data_host");
-                //console.log(visitor_name.value+","+visitor_email.value+","+visitor_contact.value+","+visitor_indate.value+","+visitor_intime.value+","+visitor_outtime.value);
-                this.router.navigate(['dashboard']);
-        */
+        localStorage.removeItem("current_visitor_data_host");
+        localStorage.removeItem("current_visitor_data_host_name");
+        localStorage.removeItem("current_visitor_data_name");
+        localStorage.removeItem("current_visitor_data_email");
+        localStorage.removeItem("current_visitor_data_contact");
+        localStorage.removeItem("current_visitor_data_indate");
+        localStorage.removeItem("current_visitor_data_intime");
+        localStorage.removeItem("current_visitor_data_host");
 
     }
 }

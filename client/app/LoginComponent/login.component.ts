@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginData } from './logindata';
-import { LoginU } from '../Model/login.model';
+import { LoginUser } from '../Model/login.model';
 import { LoginService } from '../services/login.service';
 
 @Component({
@@ -14,7 +14,7 @@ import { LoginService } from '../services/login.service';
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     login_model = new LoginData('', '');
-    loginUsers: LoginU[];
+    loginUsers: LoginUser[];
     submitted = false;
     logindata = '';
     user_email = '';
@@ -30,12 +30,12 @@ export class LoginComponent implements OnInit {
     onLogin(event, username, password) {
         var result;
         this.loginUsers = [];
-        var newTodo = {
+        var userDetail = {
             email: username.value,
             password: password.value
         }
 
-        result = this.loginService.checkLogin(newTodo);
+        result = this.loginService.checkLogin(userDetail);
 
         //console.log(result);
 
@@ -46,7 +46,9 @@ export class LoginComponent implements OnInit {
 
             
 
-            if (loginUsers == null) {
+            
+
+            if (loginUsers.toString() == "User not found") {
                 alert("Please enter correct data");
                 username.value = "";
                 password.value = "";

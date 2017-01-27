@@ -15,17 +15,9 @@ var EditVisitor = (function () {
     function EditVisitor(_http) {
         this._http = _http;
     }
-    /*
-    editSavedDatas(visitor_edit) {
-            var headers = new Headers();
-            headers.append("content-type", "application/json");
-            return this._http.post('api/v1/visitor_edit',JSON.stringify(visitor_edit), {headers: headers}).map(res=>res.json());
-        }
-     */
     EditVisitor.prototype.editVisitor = function (visitor_data) {
         var headers = new http_1.Headers();
         headers.append("content-type", "application/json");
-        console.log("It reached here...");
         return this._http.post('edit_data/visitor_edit', JSON.stringify(visitor_data), { headers: headers })
             .map(function (res) { return res.json(); });
     };

@@ -5,7 +5,7 @@
         </div>
     </div>
 </nav>
-<div class="col-md-offset-4 col-md-4">
+<div class="col-md-offset-4 col-xs-offset-4 col-md-4 col-xs-4">
     <h2>Edit Visitor Data</h2>
 <form [formGroup]="editForm">
     <div class="formGroup">
@@ -29,7 +29,7 @@
         </div>
         <br/>
         <label for="visitor_indate_edit">Visitor Check-In Date</label>
-        <input type="date" formControlName="visitor_indate_edit" class="form-control" name="visitor_indate_edit" #visitor_indate_edit>
+        <input type="text" formControlName="visitor_indate_edit" class="form-control" name="visitor_indate_edit" #visitor_indate_edit>
         <div *ngIf="!(editForm.controls['visitor_indate_edit'].valid || editForm.controls['visitor_indate_edit'].pristine)" class="alert alert-danger">
             Visitor Check-In Date is required
         </div>

@@ -1,3 +1,3 @@
-export class DashboardModelUq {
+export class DashboardModelUser {
     visitor_host:string;
 }

@@ -34,6 +34,7 @@
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let data of searched_data">
+                                                <td *ngIf="data == null">No data to display</td>
                                                 <td>{{data.visitor_name}}</td>
                                                 <td>{{data.visitor_email}}</td>
                                                 <td>{{data.visitor_contact}}</td>
@@ -56,32 +57,31 @@
 </nav>
 <div class="container">
     <div class="row">
-        <h1 style="text-align : center">Add Visitors...</h1>
-        <form [formGroup]="dashboardForm">
-            <table>
-                <tr>
-                    <td>
-                        <div *ngIf="dashboardForm.controls.visitorname.hasError('minlength')"> Visitor Name is Required </div>
-                        <div *ngIf="dashboardForm.controls.visitorname.hasError('pattern')">Field must only have characters</div>
-                        <input type="text" class="form-control input-lg" formControlName="visitorname" placeholder="Visitor Name..." autofocus #visitorname>
-                    </td>
-                    <td>
-                        <input type="email" class="form-control input-lg" formControlName="visitoremail" placeholder="Visitor Email..." #visitoremail>
-                    </td>
-                    <td>
-                        <input type="number" class="form-control input-lg" formControlName="visitorcontact" placeholder="Visitor Contact..." #visitorcontact></td>
-                    <td>
-                        <input type="date" class="form-control input-lg" formControlName="visitorindate" placeholder="Visitor In Time..." #visitorindate>
-                    </td>
-                    <td>
-                        <input type="time" class="form-control input-lg" formControlName="visitorintime" placeholder="Visitor Out Time..." #visitorintime></td>
-                    <td>
-                        <button type="button" [disabled]="!dashboardForm.valid" (click)="addVisitor($event,visitorname,visitoremail,visitorcontact,visitorindate,visitorintime)"
-                            class="btn btn-success btn-lg">Add Visitor</button>
-                    </td>
-                </tr>
-            </table>
-        </form>
+        <h1 style="text-align : center">...Add Visitors...</h1>
+        <div>
+            <form [formGroup]="dashboardForm">
+                <table class="col-md-10 col-md-offset-1 table-condensed table-responsive">
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control input-lg" formControlName="visitorname" placeholder="Visitor Name..." autofocus #visitorname>
+                            <div *ngIf="dashboardForm.controls.visitorname.hasError('minlength')"> Visitor Name is Required </div>
+                        </td>
+                        <td>
+                            <input type="email" class="form-control input-lg" formControlName="visitoremail" placeholder="Visitor Email..." #visitoremail>
+                            <div *ngIf="dashboardForm.controls.visitoremail.hasError('pattern')"> Visitor Email is Required </div>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control input-lg" formControlName="visitorcontact" placeholder="Visitor Contact..." #visitorcontact>
+                            <div *ngIf="( dashboardForm.controls.visitorcontact.hasError('minlength') )"> Enter a valid Contact </div>
+                        </td>
+                        <td>
+                            <button type="button" [disabled]="!dashboardForm.valid" (click)="addVisitor($event,visitorname,visitoremail,visitorcontact)"
+                                class="btn btn-success btn-lg">Add Visitor</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
         <div class="col-md-10 col-md-offset-1">
             <div class="add-todo-form text-center">
                 <br/><br/>

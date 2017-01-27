@@ -1,8 +1,8 @@
 "use strict";
-var DashboardModelUq = (function () {
-    function DashboardModelUq() {
+var DashboardModelUser = (function () {
+    function DashboardModelUser() {
     }
-    return DashboardModelUq;
+    return DashboardModelUser;
 }());
-exports.DashboardModelUq = DashboardModelUq;
+exports.DashboardModelUser = DashboardModelUser;
 //# sourceMappingURL=dashboard.modeluq.js.map

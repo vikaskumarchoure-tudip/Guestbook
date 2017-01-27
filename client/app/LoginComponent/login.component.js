@@ -33,15 +33,15 @@ var LoginComponent = (function () {
         var _this = this;
         var result;
         this.loginUsers = [];
-        var newTodo = {
+        var userDetail = {
             email: username.value,
             password: password.value
         };
-        result = this.loginService.checkLogin(newTodo);
+        result = this.loginService.checkLogin(userDetail);
         //console.log(result);
         result.subscribe(function (loginUsers) {
             _this.loginUsers = loginUsers;
-            if (loginUsers == null) {
+            if (loginUsers.toString() == "User not found") {
                 alert("Please enter correct data");
                 username.value = "";
                 password.value = "";

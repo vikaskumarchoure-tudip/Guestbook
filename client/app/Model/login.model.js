@@ -1,8 +1,8 @@
 "use strict";
-var LoginU = (function () {
-    function LoginU() {
+var LoginUser = (function () {
+    function LoginUser() {
     }
-    return LoginU;
+    return LoginUser;
 }());
-exports.LoginU = LoginU;
+exports.LoginUser = LoginUser;
 //# sourceMappingURL=login.model.js.map

@@ -1,8 +1,8 @@
 "use strict";
-var RegisterU = (function () {
-    function RegisterU() {
+var RegisterUser = (function () {
+    function RegisterUser() {
     }
-    return RegisterU;
+    return RegisterUser;
 }());
-exports.RegisterU = RegisterU;
+exports.RegisterUser = RegisterUser;
 //# sourceMappingURL=register.model.js.map

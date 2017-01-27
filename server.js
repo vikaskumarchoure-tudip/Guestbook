@@ -9,9 +9,9 @@ var index = require('./routes/index');
 //updated code
 var dashboard = require('./routes/dashboard');
 var editvisitor = require('./routes/editvisitor');
-var users_datas = require('./routes/users_datas');
-var visitor_datas = require('./routes/visitor_datas');
-var edit_data = require('./routes/edit_data');
+var users_data = require('./routes/users_data');
+var visitor_data = require('./routes/visitor_data');
+
 //updated code finish here
 
 var app = express();
@@ -24,16 +24,17 @@ app.engine('html', require('ejs').renderFile);
 app.use(express.static(path.join(__dirname, 'client')));
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 app.use('/', index);
-app.use('/',dashboard);
-app.use('/',editvisitor);
-app.use('/edit_data',edit_data);
-app.use('/api/v1/',users_datas);
-app.use('/api/v1/',visitor_datas);
+app.use('/', dashboard);
+app.use('/', editvisitor);
+app.use('/api/v1/', users_data);
+app.use('/api/v1/', visitor_data);
 
 
-app.listen(3000, function(){
+app.listen(3000, function () {
     console.log('Server started on port 3000...');
 });

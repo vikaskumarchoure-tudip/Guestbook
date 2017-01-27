@@ -26,79 +26,71 @@ var DashboardComponent = (function () {
         this.dashboardForm = this.formBuilder.group({
             visitorname: ['', [forms_1.Validators.required, forms_1.Validators.minLength(6)]],
             visitoremail: ['', [forms_1.Validators.required, forms_1.Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
-            visitorcontact: ['', [forms_1.Validators.required, forms_1.Validators.minLength(10), forms_1.Validators.maxLength(12)]],
-            visitorindate: ['', [forms_1.Validators.required,]],
-            visitorintime: ['', [forms_1.Validators.required]]
+            visitorcontact: ['', [forms_1.Validators.required, forms_1.Validators.minLength(10)]],
         });
-        //this.user_email = this.savedUser.user_email;
-        //alert(this.savedUser.users_logged);
-        //console.log("User"+this.savedUser.users_logged);
         var res;
-        var visitoruq = {
+        var visitoruser = {
             visitor_host: this.useremail
         };
         this.saved_datas = [];
-        this.dashboardService.getSavedDatas(visitoruq).subscribe(function (saved_data) { _this.saved_datas = saved_data; });
+        this.dashboardService.getSavedData(visitoruser).subscribe(function (saved_data) { _this.saved_datas = saved_data; });
     };
-    DashboardComponent.prototype.addVisitor = function (event, visitorname, visitoremail, visitorcontact, visitorintime, visitorouttime) {
+    DashboardComponent.prototype.addVisitor = function (event, visitorname, visitoremail, visitorcontact) {
         var _this = this;
-        //console.log(visitorname.value+""+visitoremail.value+""+visitorcontact.value+""+visitorintime.value+""+visitorouttime.value);        
+        var date = new Date();
         var result;
         var visitor = {
             visitor_name: visitorname.value,
             visitor_email: visitoremail.value,
             visitor_contact: visitorcontact.value,
-            visitor_indate: visitorintime.value,
-            visitor_intime: visitorouttime.value,
+            visitor_indate: date.getDate() + "-" + date.getMonth() + 1 + "-" + date.getFullYear(),
+            visitor_intime: new Date().toTimeString().split(" ")[0],
             visitor_outtime: "",
             visitor_host: this.useremail,
             visitor_host_name: this.username
         };
-        result = this.dashboardService.setSavedDatas(visitor);
+        result = this.dashboardService.setSavedData(visitor);
         result.subscribe(function (x) {
-            _this.saved_datas.push(visitor);
+            _this.saved_datas.unshift(visitor);
         });
         visitorname.value = "";
         visitoremail.value = "";
         visitorcontact.value = "";
-        visitorintime.value = "";
-        visitorouttime.value = "";
     };
     //edit visitor
     DashboardComponent.prototype.editVisitor = function (saved_data) {
-        //alert("yet to be done..." + saved_data._id);
         localStorage.setItem("current_visitor_data_name", saved_data.visitor_name);
         localStorage.setItem("current_visitor_data_email", saved_data.visitor_email);
         localStorage.setItem("current_visitor_data_contact", saved_data.visitor_contact);
         localStorage.setItem("current_visitor_data_indate", saved_data.visitor_indate);
         localStorage.setItem("current_visitor_data_intime", saved_data.visitor_intime);
         localStorage.setItem("current_visitor_data_host", saved_data.visitor_host);
+        localStorage.setItem("current_visitor_data_host_name", saved_data.visitor_host_name);
         this.router.navigate(['editvisitor']);
     };
     //delete visitor
     DashboardComponent.prototype.deleteVisitor = function (saved_data) {
-        var saved_datas = this.saved_datas;
+        var saved_data_all = this.saved_datas;
         console.log(saved_data._id);
         this.dashboardService.deleteVisitor(saved_data._id).subscribe(function (data) {
             if (data.n == 1) {
-                for (var i = 0; i < saved_datas.length; i++) {
-                    if (saved_datas[i]._id == saved_data._id) {
-                        saved_datas.splice(i, 1);
+                for (var i = 0; i < saved_data_all.length; i++) {
+                    if (saved_data_all[i]._id == saved_data._id) {
+                        saved_data_all.splice(i, 1);
                     }
                 }
             }
         });
     };
     DashboardComponent.prototype.searchVisitor = function (event, search_data) {
-        //console.log("ans is ",this.saved_datas[3].visitor_name.search("Prashant"));
         var _this = this;
         this.searched_data = [];
+        var str1 = search_data.value.toLowerCase();
         this.saved_datas.forEach(function (element) {
-            if (element.visitor_name.search(search_data.value) == 0) {
+            if (element.visitor_name.toLowerCase().search(search_data.value) == 0) {
                 _this.searched_data.push(element);
             }
         });
-        //console.log("The return ans is ",this.searched_data);
     };
     DashboardComponent.prototype.onLogOut = function () {
         localStorage.removeItem("host_email");
