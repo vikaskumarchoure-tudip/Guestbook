@@ -60,8 +60,8 @@
                             <div class="modal-header">
                                 <div class="container col-md-12">
                                     <h3>Searched Visitors</h3>
-                                    <h4 *ngIf = "!(search_modal)" class="text-center">No Data Found</h4>
-                                    <table *ngIf = "(search_modal)" class="table table-condensed table-responsive">
+                                    <h4 *ngIf="!(search_modal)" class="text-center">No Data Found</h4>
+                                    <table *ngIf="(search_modal)" class="table table-condensed table-responsive">
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
@@ -130,6 +130,7 @@
                 <br/><br/>
             </div>
             <div class="todo-list">
+                <!-- <h3 *ngIf="!(dashboard_data)" class="text-center">No data to display</h3> -->
                 <table class="table table-hover">
                     <thead>
                         <tr>
