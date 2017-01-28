@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginData } from './logindata';
 import { LoginUser } from '../Model/login.model';
 import { LoginService } from '../services/login.service';
 
@@ -13,7 +12,6 @@ import { LoginService } from '../services/login.service';
 
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
-    login_model = new LoginData('', '');
     loginUsers: LoginUser[];
     submitted = false;
     logindata = '';

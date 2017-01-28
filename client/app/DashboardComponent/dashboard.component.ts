@@ -11,7 +11,7 @@ import { RegisterService } from '../services/register.service';
     moduleId: module.id,
     selector: 'dashboard-form',
     templateUrl: './dashboard.component.html',
-    providers: [DashboardService, EditVisitor,RegisterService]
+    providers: [DashboardService, EditVisitor, RegisterService]
 })
 
 export class DashboardComponent implements OnInit {
@@ -19,12 +19,13 @@ export class DashboardComponent implements OnInit {
     searched_data: DashboardModel[];
     saved_datas: DashboardModel[];
     dashboardForm: FormGroup;
+    search_modal = false;
     addForm: FormGroup;
     is_admin = false;
     useremail = localStorage.getItem("host_email");
     username = localStorage.getItem("host_name");
     userrole = localStorage.getItem("host_role");
-    constructor(private formBuilder: FormBuilder, private dashboardService: DashboardService, private router: Router, private registerService : RegisterService) { }
+    constructor(private formBuilder: FormBuilder, private dashboardService: DashboardService, private router: Router, private registerService: RegisterService) { }
 
 
     ngOnInit() {
@@ -131,13 +132,21 @@ export class DashboardComponent implements OnInit {
 
         this.saved_datas.forEach(element => {
 
-            var str2 = element.visitor_name.toString().trim();
+            var str2 = element.visitor_name.toString().toLowerCase().trim();
 
-            if (element.visitor_name.toString().toLowerCase().search(search_data.value) == 0) {
+            if (str2.search(str1) != -1) {
                 this.searched_data.push(element);
             }
-
+           
         });
+
+        if(this.searched_data.length != 0){
+            this.search_modal = true;
+        }
+        else{
+            this.search_modal = false;
+        }
+
     }
 
     addUser(event, username, useremail, userrole, userpassword) {

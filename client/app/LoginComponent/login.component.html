@@ -3,7 +3,7 @@
   <form [formGroup]="loginForm">
     <div class="formGroup">
       <label for="username">Username</label>
-      <input type="email" [(ngModel)]='login_model.login_username' class="form-control" name="username" formControlName="username"
+      <input type="email" class="form-control" name="username" formControlName="username"
         autofocus placeholder = "xyz@tudip.nl" #username>
         <div *ngIf="!(loginForm.controls['username'].valid || loginForm.controls['username'].pristine)" class="alert alert-danger">
           Username is required
@@ -13,7 +13,7 @@
     <br/>
     <div class="formGroup">
       <label for="password">Password</label>
-      <input type="password" [(ngModel)]='login_model.login_password' class="form-control" name="password" formControlName="password"
+      <input type="password" class="form-control" name="password" formControlName="password"
        placeholder = "password" #password>
         <div *ngIf="!(loginForm.controls['password'].valid || loginForm.controls['password'].pristine)" class="alert alert-danger">
           <div *ngIf="loginForm.controls.password.hasError('minlength')"> Enter at least 6 characters </div>
@@ -31,7 +31,5 @@
       </div>
     </div>
   </form>
-  <!--<h4>{{login_model.login_username}},{{login_model.login_password}}</h4>-->
-  {{logindata}}
 </div>
 <register-form></register-form>
