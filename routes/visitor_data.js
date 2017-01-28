@@ -3,38 +3,30 @@ var router = express.Router();
 var mongojs = require('mongojs');
 var dbpath = require('../database/database');
 var db = mongojs(dbpath.database, ['visitor_data']);
+var error_response = require('./errorresponses');
+
 
 //get specific data
 router.post('/visitor_data_unique', function (req, res, next) {
+
     var visitors = req.body;
     //if the logged user is admin
     if (req.body.visitor_role == "admin") {
+        console.log("step0");
         db.visitor_data.find().sort({
-            visitor_host: 1
-        }, function (err, data) {
-            if (err) {
-                if (res.status(500)) {
-                    res.send({
-                        'error': true,
-                        'message': 'INTERNAL SERVER ERROR'
-                    });
-                } else if (res.status(400)) {
-                    res.send({
-                        'error': true,
-                        'message': 'SESSION EXPIRED'
-                    });
-                } else {
-                    res.send({
-                        'error': true,
-                        'message': 'Server error occured'
-                    });
-                }
-                //res.send(err);
-            } else {
+                visitor_host: 1
+            },
 
-                res.json(data);
+            function (err, data) {
+                if (err) {
+
+                    error_response.errorResponses(res, err, data);
+                  
+                } else {
+                    res.json(data);
+                }
             }
-        });
+        );
     } else {
         //data on receptionist login starts here
         db.visitor_data.find({
@@ -43,30 +35,19 @@ router.post('/visitor_data_unique', function (req, res, next) {
                 visitor_indate: -1,
                 visitor_intime: -1
             },
+
             function (err, data) {
+
                 if (err) {
-                    if (res.status(500)) {
-                        res.send({
-                            'error': true,
-                            'message': 'INTERNAL SERVER ERROR'
-                        });
-                    } else if (res.status(400)) {
-                        res.send({
-                            'error': true,
-                            'message': 'SESSION EXPIRED'
-                        });
-                    } else {
-                        res.send({
-                            'error': true,
-                            'message': 'Server error occured'
-                        });
-                    }
-                    //res.send(err);
+                    error_response.errorResponses(res, err, data);
+              
                 } else {
 
                     res.json(data);
                 }
-            });
+            }
+
+        );
         //data on rececptionist login ends here
     }
 });
@@ -75,29 +56,17 @@ router.post('/visitor_data_unique', function (req, res, next) {
 router.post('/visitor_data', function (req, res, next) {
 
     var visitors = req.body;
-    db.visitor_data.save(visitors, function (err, result) {
-        if (err) {
-            if (res.status(500)) {
-                res.send({
-                    'error': true,
-                    'message': 'INTERNAL SERVER ERROR'
-                });
-            } else if (res.status(400)) {
-                res.send({
-                    'error': true,
-                    'message': 'SESSION EXPIRED'
-                });
+    db.visitor_data.save(visitors,
+        function (err, data) {
+
+            if (err) {
+                error_response.errorResponses(res, err, data);
+               
             } else {
-                res.send({
-                    'error': true,
-                    'message': 'Server error occured'
-                });
+                res.json(data);
             }
-            //res.send(err);
-        } else {
-            res.json(result);
-        }
-    });
+
+        });
 
 });
 
@@ -117,28 +86,14 @@ router.delete('/visitor_data/:id', function (req, res, next) {
 
     db.visitor_data.remove({
         _id: mongojs.ObjectId(req.params.id)
-    }, '', function (err, result) {
+    }, '', function (err, data) {
         if (err) {
-            if (res.status(500)) {
-                res.send({
-                    'error': true,
-                    'message': 'INTERNAL SERVER ERROR'
-                });
-            } else if (res.status(400)) {
-                res.send({
-                    'error': true,
-                    'message': 'SESSION EXPIRED'
-                });
-            } else {
-                res.send({
-                    'error': true,
-                    'message': 'Server error occured'
-                });
-            }
-            //res.send(err);
+            error_response.errorResponses(res, err, data);
+
         } else {
-            res.json(result);
+            res.json(data);
         }
+
     });
 
 

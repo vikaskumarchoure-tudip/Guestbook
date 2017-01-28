@@ -17,14 +17,14 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <div class="container col-md-12">
+                                <div class="container col-md-offset-2 col-md-8 col-xs-12">
                                     <h3>Add New Admin/Receptionist</h3>
                                     <!-- Add modal starts here -->
                                     <form [formGroup]="addForm">
                                         <div class="formGroup">
                                             <br/>
                                             <label for="username">Name</label>
-                                            <input type="text" formControlName="useraddname" class="form-control" name="username" placeholder="John Smith" #useraddname>
+                                            <input type="text" formControlName="useraddname" class="form-control" name="username" placeholder="Enter Name" #useraddname>
                                             <div *ngIf="addForm.controls.useraddname.hasError('minlength')"> Visitor Name is Required </div>
                                             <br/>
                                             <label for="password">Email</label>
@@ -37,7 +37,7 @@
                                             </select>
                                             <br/>
                                             <label for="conf-password">Password</label>
-                                            <input type="password" formControlName="useraddpassword" class="form-control" name="useraddpassword" placeholder="password"
+                                            <input type="password" formControlName="useraddpassword" class="form-control" name="useraddpassword" placeholder="Password"
                                                 #useraddpassword>
                                                 <div *ngIf="addForm.controls.useraddpassword.hasError('minlength')"> At least 6 characters are required </div>
                                                 <br/>

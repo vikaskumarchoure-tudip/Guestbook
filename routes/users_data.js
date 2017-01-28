@@ -4,6 +4,7 @@ var mongojs = require('mongojs');
 var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
 var dbpath = require('../database/database');
+var error_response = require('./errorresponses');
 var db = mongojs(dbpath.database, ['users_data']);
 
 //save register data
@@ -12,47 +13,20 @@ router.post('/users_data', function (req, res, next) {
 
     bcrypt.hash(req.body.password, 10, function (err, hash) {
         if (err) {
-            if (res.status(500)) {
-                res.send({
-                    'error': true,
-                    'message': 'INTERNAL SERVER ERROR'
-                });
-            } else if (res.status(400)) {
-                res.send({
-                    'error': true,
-                    'message': 'SESSION EXPIRED'
-                });
-            } else {
-                res.send({
-                    'error': true,
-                    'message': 'Server error occured'
-                });
-            }
+
+            error_response.errorResponses(res, err, data);
 
         } else {
             db.users_data.save({
                 username: data.username,
                 email: data.email,
                 password: hash,
-                role:data.role
+                role: data.role
             }, function (err, result) {
                 if (err) {
-                    if (res.status(500)) {
-                        res.send({
-                            'error': true,
-                            'message': 'INTERNAL SERVER ERROR'
-                        });
-                    } else if (res.status(400)) {
-                        res.send({
-                            'error': true,
-                            'message': 'SESSION EXPIRED'
-                        });
-                    } else {
-                        res.send({
-                            'error': true,
-                            'message': 'Server error occured'
-                        });
-                    }
+
+                    error_response.errorResponses(res, err, data);
+
                 } else {
                     res.json("Response is coming");
                 }
@@ -66,41 +40,28 @@ router.post('/find_data', function (req, res, next) {
     var todo = req.body;
 
     db.users_data.findOne({
-        email: req.body.email
-    }, function (err, result) {
-        if (err) {
-            if (res.status(500)) {
-                res.send({
-                    'error': true,
-                    'message': 'INTERNAL SERVER ERROR'
-                });
-            } else if (res.status(400)) {
-                res.send({
-                    'error': true,
-                    'message': 'SESSION EXPIRED'
-                });
+            email: req.body.email
+        },
+        function (err, result) {
+            if (err) {
+
+                error_response.errorResponses(res, err, data);
+
+            } else if (!result) {
+
+                res.json('User not found');
             } else {
-                res.send({
-                    'error': true,
-                    'message': 'Server error occured'
+                bcrypt.compare(req.body.password, result.password, function (err, user) {
+                    if (err) {
+                        res.json('User not found');
+                    } else if (!user) {
+                        res.json('User not found');
+                    } else {
+                        res.send(result);
+                    }
                 });
             }
-
-        } else if (!result) {
-
-            res.json('User not found');
-        } else {
-            bcrypt.compare(req.body.password, result.password, function (err, user) {
-                if (err) {
-                    res.json('User not found');
-                } else if (!user) {
-                    res.json('User not found');
-                } else {
-                    res.send(result);
-                }
-            });
-        }
-    });
+        });
 
 });
 

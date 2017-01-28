@@ -18,16 +18,14 @@ export class EditComponent implements OnInit {
     useremail = localStorage.getItem("current_visitor_data_host");
     username = localStorage.getItem("current_visitor_data_host_name");
     constructor(private formBuilder: FormBuilder, private dashService: DashboardService, private editService: EditVisitor, private router: Router) {
-        console.log("Constructor runs");
-        if (localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
-            this.router.navigate(['']);
-        }
+
     }
 
     //edit component loads
     ngOnInit() {
-        if (localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
-            this.router.navigate(['']);
+
+        if (localStorage.getItem("logged") == undefined && localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
+            this.router.navigate(['dashboard']);
         }
 
         var visitor_data_name = localStorage.getItem("current_visitor_data_name");
@@ -39,7 +37,7 @@ export class EditComponent implements OnInit {
 
         this.editForm = this.formBuilder.group(
             {
-                visitor_name_edit: [visitor_data_name, Validators.required],
+                visitor_name_edit: [visitor_data_name, [Validators.required, Validators.pattern("[a-zA-Z ]{3,20}")]],
                 visitor_email_edit: [visitor_data_email, [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
                 visitor_contact_edit: [visitor_data_contact, Validators.required],
                 visitor_indate_edit: [visitor_data_indate, Validators.required],
@@ -86,7 +84,7 @@ export class EditComponent implements OnInit {
             localStorage.removeItem("current_visitor_data_indate");
             localStorage.removeItem("current_visitor_data_intime");
             localStorage.removeItem("current_visitor_data_host");
-
+            localStorage.removeItem("logged");
             //navigating back to the dashboard page
             this.router.navigate(['dashboard']);
         }

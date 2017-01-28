@@ -42,13 +42,13 @@ export class DashboardComponent implements OnInit {
         }
 
         this.addForm = this.formBuilder.group({
-            useraddname: ['', [Validators.required, Validators.minLength(6)]],
+            useraddname: ['', [Validators.required, Validators.minLength(6),Validators.pattern("[a-zA-Z ]{3,20}")]],
             useraddemail: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
             useraddpassword: ['', [Validators.required, Validators.minLength(6)]]
         });
 
         this.dashboardForm = this.formBuilder.group({
-            visitorname: ['', [Validators.required, Validators.minLength(6)]],
+            visitorname: ['', [Validators.required, Validators.minLength(6),Validators.pattern("[a-zA-Z ]{3,20}")]],
             visitoremail: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
             visitorcontact: ['', [Validators.required, Validators.minLength(10), Validators.pattern("[1-9][0-9]{9}")]],
         });
@@ -103,6 +103,7 @@ export class DashboardComponent implements OnInit {
         localStorage.setItem("current_visitor_data_intime", saved_data.visitor_intime);
         localStorage.setItem("current_visitor_data_host", saved_data.visitor_host);
         localStorage.setItem("current_visitor_data_host_name", saved_data.visitor_host_name);
+        localStorage.setItem("logged","YES");
         this.router.navigate(['editvisitor']);
     }
 
@@ -129,21 +130,25 @@ export class DashboardComponent implements OnInit {
         this.searched_data = [];
 
         var str1 = search_data.value.toString().toLowerCase().trim();
+        if (str1.length > 0) {
 
-        this.saved_datas.forEach(element => {
+            this.saved_datas.forEach(element => {
 
-            var str2 = element.visitor_name.toString().toLowerCase().trim();
+                var str2 = element.visitor_name.toString().toLowerCase().trim();
 
-            if (str2.search(str1) != -1) {
-                this.searched_data.push(element);
-            }
-           
-        });
+                if (str2.search(str1) != -1) {
+                    this.searched_data.push(element);
+                }
 
-        if(this.searched_data.length != 0){
+            });
+
+        }
+
+
+        if (this.searched_data.length != 0) {
             this.search_modal = true;
         }
-        else{
+        else {
             this.search_modal = false;
         }
 
@@ -179,8 +184,8 @@ export class DashboardComponent implements OnInit {
         localStorage.removeItem("host_email");
         localStorage.removeItem("host_name");
         localStorage.removeItem("host_role");
+        localStorage.removeItem("logged");
         this.router.navigate(['']);
-
     }
 
 }
