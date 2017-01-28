@@ -32,16 +32,17 @@
                                             <div *ngIf="addForm.controls.useraddemail.hasError('pattern')"> Visitor Email is Required </div>
                                             <br/>
                                             <select class="form-control" id="userrole" #userrole>
-    <option>admin</option>
-    <option>receptionist</option>
-   </select>
+                                                <option>admin</option>
+                                                <option>receptionist</option>
+                                            </select>
                                             <br/>
                                             <label for="conf-password">Password</label>
                                             <input type="password" formControlName="useraddpassword" class="form-control" name="useraddpassword" placeholder="password"
                                                 #useraddpassword>
                                                 <div *ngIf="addForm.controls.useraddpassword.hasError('minlength')"> At least 6 characters are required </div>
                                                 <br/>
-                                                <button type="button" (click)="addUser($event,useraddname,useraddemail,userrole,useraddpassword)" [disabled]="!addForm.valid" class="btn btn-default">Add User</button>
+                                                <button type="button" (click)="addUser($event,useraddname,useraddemail,userrole,useraddpassword)" [disabled]="!addForm.valid"
+                                                    class="btn btn-default">Add User</button>
                                         </div>
                                     </form>
                                     <!-- Add modal ends here -->
