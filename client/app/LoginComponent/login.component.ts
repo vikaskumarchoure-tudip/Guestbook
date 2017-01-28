@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
     user_email = '';
     constructor(private formBuilder: FormBuilder, private loginService: LoginService, private router: Router) { }
 
-//Login component loads
+    //Login component loads
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
             username: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
@@ -28,13 +28,13 @@ export class LoginComponent implements OnInit {
         });
     }
 
-//Login button click event handler
+    //Login button click event handler
     onLogin(event, username, password) {
         var result;
         this.loginUsers = [];
         var userDetail = {
             email: username.value.toString().trim(),
-            password: password.value.toString().trim()
+            password: password.value.toString().trim(),
         }
 
         result = this.loginService.checkLogin(userDetail);
@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit {
             else {
                 localStorage.setItem('host_email', loginUsers.email);
                 localStorage.setItem('host_name', loginUsers.username);
+                localStorage.setItem('host_role', loginUsers.role);
                 //console.log(""+loginUsers.email);
                 this.router.navigate(['/dashboard']);
             }

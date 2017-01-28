@@ -37,7 +37,7 @@ var LoginComponent = (function () {
         this.loginUsers = [];
         var userDetail = {
             email: username.value.toString().trim(),
-            password: password.value.toString().trim()
+            password: password.value.toString().trim(),
         };
         result = this.loginService.checkLogin(userDetail);
         result.subscribe(function (loginUsers) {
@@ -50,6 +50,7 @@ var LoginComponent = (function () {
             else {
                 localStorage.setItem('host_email', loginUsers.email);
                 localStorage.setItem('host_name', loginUsers.username);
+                localStorage.setItem('host_role', loginUsers.role);
                 //console.log(""+loginUsers.email);
                 _this.router.navigate(['/dashboard']);
             }

@@ -37,7 +37,8 @@ export class RegisterComponent implements OnInit {
         var newUser = {
             username: username.value.toString().trim(),
             email: email.value.toString().trim(),
-            password: password.value.toString().trim()
+            password: password.value.toString().trim(),
+            role: "receptionist"
         }
 
         result = this.registerService.registerUser(newUser);

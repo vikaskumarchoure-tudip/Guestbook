@@ -13,16 +13,34 @@ var forms_1 = require("@angular/forms");
 var dashboard_service_1 = require("../services/dashboard.service");
 var router_1 = require("@angular/router");
 var editvisitor_service_1 = require("../services/editvisitor.service");
+var register_service_1 = require("../services/register.service");
 var DashboardComponent = (function () {
-    function DashboardComponent(formBuilder, dashboardService, router) {
+    function DashboardComponent(formBuilder, dashboardService, router, registerService) {
         this.formBuilder = formBuilder;
         this.dashboardService = dashboardService;
         this.router = router;
+        this.registerService = registerService;
+        this.is_admin = false;
         this.useremail = localStorage.getItem("host_email");
         this.username = localStorage.getItem("host_name");
+        this.userrole = localStorage.getItem("host_role");
     }
     DashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
+        if (localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
+            this.router.navigate(['']);
+        }
+        if (this.userrole == "admin") {
+            this.is_admin = true;
+        }
+        else {
+            this.is_admin = false;
+        }
+        this.addForm = this.formBuilder.group({
+            useraddname: ['', [forms_1.Validators.required, forms_1.Validators.minLength(6)]],
+            useraddemail: ['', [forms_1.Validators.required, forms_1.Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
+            useraddpassword: ['', [forms_1.Validators.required, forms_1.Validators.minLength(6)]]
+        });
         this.dashboardForm = this.formBuilder.group({
             visitorname: ['', [forms_1.Validators.required, forms_1.Validators.minLength(6)]],
             visitoremail: ['', [forms_1.Validators.required, forms_1.Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
@@ -30,7 +48,8 @@ var DashboardComponent = (function () {
         });
         var res;
         var visitoruser = {
-            visitor_host: this.useremail
+            visitor_host: this.useremail,
+            visitor_role: this.userrole
         };
         this.saved_datas = [];
         this.dashboardService.getSavedData(visitoruser).subscribe(function (saved_data) { _this.saved_datas = saved_data; });
@@ -51,8 +70,7 @@ var DashboardComponent = (function () {
             visitor_host_name: this.username
         };
         if (localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
-            alert("Please log In to continue");
-            this.router.navigate(['logincomponent']);
+            this.router.navigate(['']);
         }
         else {
             result = this.dashboardService.setSavedData(visitor);
@@ -93,17 +111,37 @@ var DashboardComponent = (function () {
     DashboardComponent.prototype.searchVisitor = function (event, search_data) {
         var _this = this;
         this.searched_data = [];
-        var str1 = search_data.value.toLowerCase();
+        var str1 = search_data.value.toString().toLowerCase().trim();
         this.saved_datas.forEach(function (element) {
-            if (element.visitor_name.toLowerCase().search(search_data.value) == 0) {
+            var str2 = element.visitor_name.toString().trim();
+            if (element.visitor_name.toString().toLowerCase().search(search_data.value) == 0) {
                 _this.searched_data.push(element);
             }
+        });
+    };
+    DashboardComponent.prototype.addUser = function (event, username, useremail, userrole, userpassword) {
+        //console.log(username.value + "," + useremail.value + "," + userpassword.value +","+userrole.value);
+        var result;
+        var addUser = {
+            username: username.value.toString().trim(),
+            email: useremail.value.toString().trim(),
+            password: userpassword.value.toString().trim(),
+            role: userrole.value
+        };
+        result = this.registerService.registerUser(addUser);
+        result.subscribe(function (x) {
+            console.log(x);
+            alert("User added Successfully");
+            username.value = "";
+            useremail.value = "";
+            userpassword.value = "";
         });
     };
     //Log Out receptionist
     DashboardComponent.prototype.onLogOut = function () {
         localStorage.removeItem("host_email");
         localStorage.removeItem("host_name");
+        localStorage.removeItem("host_role");
         this.router.navigate(['']);
     };
     return DashboardComponent;
@@ -113,9 +151,9 @@ DashboardComponent = __decorate([
         moduleId: module.id,
         selector: 'dashboard-form',
         templateUrl: './dashboard.component.html',
-        providers: [dashboard_service_1.DashboardService, editvisitor_service_1.EditVisitor]
+        providers: [dashboard_service_1.DashboardService, editvisitor_service_1.EditVisitor, register_service_1.RegisterService]
     }),
-    __metadata("design:paramtypes", [forms_1.FormBuilder, dashboard_service_1.DashboardService, router_1.Router])
+    __metadata("design:paramtypes", [forms_1.FormBuilder, dashboard_service_1.DashboardService, router_1.Router, register_service_1.RegisterService])
 ], DashboardComponent);
 exports.DashboardComponent = DashboardComponent;
 //# sourceMappingURL=dashboard.component.js.map

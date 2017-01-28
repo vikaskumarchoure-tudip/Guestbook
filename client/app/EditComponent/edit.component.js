@@ -21,9 +21,16 @@ var EditComponent = (function () {
         this.router = router;
         this.useremail = localStorage.getItem("current_visitor_data_host");
         this.username = localStorage.getItem("current_visitor_data_host_name");
+        console.log("Constructor runs");
+        if (localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
+            this.router.navigate(['']);
+        }
     }
     //edit component loads
     EditComponent.prototype.ngOnInit = function () {
+        if (localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
+            this.router.navigate(['']);
+        }
         var visitor_data_name = localStorage.getItem("current_visitor_data_name");
         var visitor_data_email = localStorage.getItem("current_visitor_data_email");
         var visitor_data_contact = localStorage.getItem("current_visitor_data_contact");
@@ -34,8 +41,9 @@ var EditComponent = (function () {
             visitor_name_edit: [visitor_data_name, forms_1.Validators.required],
             visitor_email_edit: [visitor_data_email, [forms_1.Validators.required, forms_1.Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
             visitor_contact_edit: [visitor_data_contact, forms_1.Validators.required],
-            visitor_indate_edit: [visitor_data_indate],
+            visitor_indate_edit: [visitor_data_indate, forms_1.Validators.required],
             visitor_intime_edit: [visitor_data_intime, forms_1.Validators.required],
+            visitor_outdate_edit: [new Date().getDate() + "-" + new Date().getMonth() + 1 + "-" + new Date().getFullYear(), forms_1.Validators.required],
             visitor_outtime_edit: [new Date().toTimeString().split(" ")[0]]
         });
     };
@@ -48,6 +56,7 @@ var EditComponent = (function () {
             visitor_contact: visitor_contact.value.toString().trim(),
             visitor_indate: visitor_indate.value.toString().trim(),
             visitor_intime: visitor_intime.value.toString().trim(),
+            visitor_outdate: new Date().getDate() + "-" + new Date().getMonth() + 1 + "-" + new Date().getFullYear(),
             visitor_outtime: new Date().toTimeString().split(" ")[0],
             visitor_host: this.useremail,
             visitor_host_name: this.username

@@ -33,7 +33,8 @@ router.post('/users_data', function (req, res, next) {
             db.users_data.save({
                 username: data.username,
                 email: data.email,
-                password: hash
+                password: hash,
+                role:data.role
             }, function (err, result) {
                 if (err) {
                     if (res.status(500)) {

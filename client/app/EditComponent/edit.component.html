@@ -41,6 +41,12 @@
                     Visitor Check-In Time is required
                 </div>
                 <br/>
+                <label for="visitor_indate_edit">Visitor Check-In Date</label>
+                <input type="text" formControlName="visitor_outdate_edit" class="form-control" name="visitor_outdate_edit" #visitor_outdate_edit>
+                <div *ngIf="!(editForm.controls['visitor_outdate_edit'].valid || editForm.controls['visitor_outdate_edit'].pristine)" class="alert alert-danger">
+                    Visitor Check-Out Date is required
+                </div>
+                <br/>
                 <label for="visitor_outtime_edit">Visitor Check-Out Time</label>
                 <input type="time" formControlName="visitor_outtime_edit" class="form-control" name="visitor_outtime_edit" #visitor_outtime_edit>
                 <div *ngIf="!(editForm.controls['visitor_outtime_edit'].valid || editForm.controls['visitor_outtime_edit'].pristine)" class="alert alert-danger">

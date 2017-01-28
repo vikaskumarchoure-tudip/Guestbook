@@ -8,7 +8,7 @@ var db = mongojs(dbpath.database, ['visitor_data']);
 router.post('/visitor_data_unique', function (req, res, next) {
     var visitors = req.body;
     //if the logged user is admin
-    if (req.body.visitor_host == "admin@tudip.com") {
+    if (req.body.visitor_role == "admin") {
         db.visitor_data.find().sort({
             visitor_host: 1
         }, function (err, data) {

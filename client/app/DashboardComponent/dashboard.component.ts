@@ -5,12 +5,13 @@ import { DashboardModel } from '../Model/dashboard.model';
 import { DashboardModelUser } from '../Model/dashboard.modeluq';
 import { Router, RouterModule } from '@angular/router';
 import { EditVisitor } from '../services/editvisitor.service';
+import { RegisterService } from '../services/register.service';
 
 @Component({
     moduleId: module.id,
     selector: 'dashboard-form',
     templateUrl: './dashboard.component.html',
-    providers: [DashboardService, EditVisitor]
+    providers: [DashboardService, EditVisitor,RegisterService]
 })
 
 export class DashboardComponent implements OnInit {
@@ -18,11 +19,33 @@ export class DashboardComponent implements OnInit {
     searched_data: DashboardModel[];
     saved_datas: DashboardModel[];
     dashboardForm: FormGroup;
+    addForm: FormGroup;
+    is_admin = false;
     useremail = localStorage.getItem("host_email");
     username = localStorage.getItem("host_name");
-    constructor(private formBuilder: FormBuilder, private dashboardService: DashboardService, private router: Router) { }
+    userrole = localStorage.getItem("host_role");
+    constructor(private formBuilder: FormBuilder, private dashboardService: DashboardService, private router: Router, private registerService : RegisterService) { }
+
 
     ngOnInit() {
+
+        if (localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
+            this.router.navigate(['']);
+        }
+
+        if (this.userrole == "admin") {
+            this.is_admin = true;
+        }
+        else {
+            this.is_admin = false;
+        }
+
+        this.addForm = this.formBuilder.group({
+            useraddname: ['', [Validators.required, Validators.minLength(6)]],
+            useraddemail: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
+            useraddpassword: ['', [Validators.required, Validators.minLength(6)]]
+        });
+
         this.dashboardForm = this.formBuilder.group({
             visitorname: ['', [Validators.required, Validators.minLength(6)]],
             visitoremail: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
@@ -31,7 +54,8 @@ export class DashboardComponent implements OnInit {
 
         var res;
         var visitoruser = {
-            visitor_host: this.useremail
+            visitor_host: this.useremail,
+            visitor_role: this.userrole
         }
 
         this.saved_datas = [];
@@ -55,8 +79,7 @@ export class DashboardComponent implements OnInit {
         };
 
         if (localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
-            alert("Please log In to continue");
-            this.router.navigate(['logincomponent']);
+            this.router.navigate(['']);
         }
         else {
             result = this.dashboardService.setSavedData(visitor);
@@ -103,16 +126,42 @@ export class DashboardComponent implements OnInit {
     //search visitor
     searchVisitor(event, search_data) {
         this.searched_data = [];
-        var str1 = search_data.value.toLowerCase();
+
+        var str1 = search_data.value.toString().toLowerCase().trim();
 
         this.saved_datas.forEach(element => {
 
-            if (element.visitor_name.toLowerCase().search(search_data.value) == 0) {
+            var str2 = element.visitor_name.toString().trim();
+
+            if (element.visitor_name.toString().toLowerCase().search(search_data.value) == 0) {
                 this.searched_data.push(element);
             }
 
         });
+    }
 
+    addUser(event, username, useremail, userrole, userpassword) {
+
+        //console.log(username.value + "," + useremail.value + "," + userpassword.value +","+userrole.value);
+
+        var result;
+
+        var addUser = {
+            username: username.value.toString().trim(),
+            email: useremail.value.toString().trim(),
+            password: userpassword.value.toString().trim(),
+            role: userrole.value
+        }
+
+        result = this.registerService.registerUser(addUser);
+        result.subscribe(x => {
+            console.log(x);
+            alert("User added Successfully");
+            username.value = "";
+            useremail.value = "";
+            userpassword.value = "";
+        }
+        );
     }
 
     //Log Out receptionist
@@ -120,6 +169,7 @@ export class DashboardComponent implements OnInit {
 
         localStorage.removeItem("host_email");
         localStorage.removeItem("host_name");
+        localStorage.removeItem("host_role");
         this.router.navigate(['']);
 
     }

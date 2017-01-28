@@ -8,12 +8,50 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <li style = "padding:20px;"><a class="navbar-brand">Welcome {{username}}</a></li>
+                <li style="padding:20px;"><a class="navbar-brand">Welcome {{username}}</a></li>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
+                <li style="padding:20px;"><button *ngIf="is_admin" class="btn-primary btn btn-lg" data-toggle="modal" data-target="#addModal">Add New</button></li>
+                <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="addModal">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="container col-md-12">
+                                    <h3>Add New Admin/Receptionist</h3>
+                                    <!-- Add modal starts here -->
+                                    <form [formGroup]="addForm">
+                                        <div class="formGroup">
+                                            <br/>
+                                            <label for="username">Name</label>
+                                            <input type="text" formControlName="useraddname" class="form-control" name="username" placeholder="John Smith" #useraddname>
+                                            <div *ngIf="addForm.controls.useraddname.hasError('minlength')"> Visitor Name is Required </div>
+                                            <br/>
+                                            <label for="password">Email</label>
+                                            <input type="email" formControlName="useraddemail" class="form-control" name="password" placeholder="xyz@tudip.nl" #useraddemail>
+                                            <div *ngIf="addForm.controls.useraddemail.hasError('pattern')"> Visitor Email is Required </div>
+                                            <br/>
+                                            <select class="form-control" id="userrole" #userrole>
+    <option>admin</option>
+    <option>receptionist</option>
+   </select>
+                                            <br/>
+                                            <label for="conf-password">Password</label>
+                                            <input type="password" formControlName="useraddpassword" class="form-control" name="useraddpassword" placeholder="password"
+                                                #useraddpassword>
+                                                <div *ngIf="addForm.controls.useraddpassword.hasError('minlength')"> At least 6 characters are required </div>
+                                                <br/>
+                                                <button type="button" (click)="addUser($event,useraddname,useraddemail,userrole,useraddpassword)" [disabled]="!addForm.valid" class="btn btn-default">Add User</button>
+                                        </div>
+                                    </form>
+                                    <!-- Add modal ends here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <li style="padding:20px;"><button data-toggle="modal" (click)="searchVisitor($event, searchvisitor)" data-target="#searchModal"><i class="glyphicon glyphicon-search"></i></button><input
-                        type="text" class="input-lg" placeholder = "Search Visitors" autofocus #searchvisitor></li>
+                        type="text" class="input-lg" placeholder="Search Visitors" autofocus #searchvisitor></li>
                 <!-- Modal starts here -->
                 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="searchModal">
                     <div class="modal-dialog modal-lg">
@@ -30,6 +68,7 @@
                                                 <th>Check-In Time</th>
                                                 <th>Check-In Date</th>
                                                 <th>Check-Out Time</th>
+                                                <th>Check-Out Date</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -39,6 +78,7 @@
                                                 <td>{{data.visitor_contact}}</td>
                                                 <td>{{data.visitor_intime}}</td>
                                                 <td>{{data.visitor_indate}}</td>
+                                                <td>{{data.visitor_outdate}}</td>
                                                 <td>{{data.visitor_outtime}}</td>
                                             </tr>
                                         </tbody>
@@ -49,7 +89,7 @@
                     </div>
                 </div>
                 <!-- Modal ends here -->
-                <li style = "padding:20px;"><a class="navbar-brand" (click)="onLogOut()">Sign Out</a></li>
+                <li style="padding:20px;"><a class="navbar-brand" (click)="onLogOut()">Sign Out</a></li>
             </ul>
         </div>
     </div>
@@ -70,9 +110,10 @@
                             <div *ngIf="dashboardForm.controls.visitoremail.hasError('pattern')"> Visitor Email is Required </div>
                         </td>
                         <td>
-                            <input type="number" class="form-control input-lg" pattern="[1-9][0-9]{9}" formControlName="visitorcontact" placeholder="Visitor Contact..." #visitorcontact>
-                            <div *ngIf="(dashboardForm.controls.visitorcontact.hasError('minlength'))"> Enter a valid Contact </div>
-                            <div *ngIf="(dashboardForm.controls.visitorcontact.hasError('pattern'))">Enter a valid Contact</div>
+                            <input type="number" class="form-control input-lg" pattern="[1-9][0-9]{9}" formControlName="visitorcontact" placeholder="Visitor Contact..."
+                                #visitorcontact>
+                                <div *ngIf="(dashboardForm.controls.visitorcontact.hasError('minlength'))"> Enter a valid Contact </div>
+                                <div *ngIf="(dashboardForm.controls.visitorcontact.hasError('pattern'))">Enter a valid Contact</div>
                         </td>
                         <td>
                             <button type="button" [disabled]="!dashboardForm.valid" (click)="addVisitor($event,visitorname,visitoremail,visitorcontact)"
@@ -82,7 +123,7 @@
                 </table>
             </form>
         </div>
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <div class="add-todo-form text-center">
                 <br/><br/>
             </div>
@@ -95,8 +136,9 @@
                             <th>Email</th>
                             <th>Contact No</th>
                             <th>Check In Date</th>
-                            <th>In Time</th>
-                            <th>Out Time</th>
+                            <th>Check In Time</th>
+                            <th>Check Out Date</th>
+                            <th>Check Out Time</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
@@ -109,6 +151,7 @@
                             <td>{{saved_data.visitor_contact}}</td>
                             <td>{{saved_data.visitor_indate}}</td>
                             <td>{{saved_data.visitor_intime}}</td>
+                            <td>{{saved_data.visitor_outdate}}</td>
                             <td>{{saved_data.visitor_outtime}}</td>
                             <td><input type="button" (click)="editVisitor(saved_data)" class="btn btn-default pull-right" value="Edit"></td>
                             <td><input type="button" (click)="deleteVisitor(saved_data)" class="btn btn-danger pull-right" value="Delete"></td>
