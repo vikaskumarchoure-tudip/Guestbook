@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
             username: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
             password: ['', [Validators.required, Validators.minLength(6)]]
         });
+
     }
 
     //Login button click event handler
@@ -50,7 +51,6 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('host_email', loginUsers.email);
                 localStorage.setItem('host_name', loginUsers.username);
                 localStorage.setItem('host_role', loginUsers.role);
-                //console.log(""+loginUsers.email);
                 this.router.navigate(['/dashboard']);
             }
         });

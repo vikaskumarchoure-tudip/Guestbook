@@ -24,7 +24,7 @@ export class EditComponent implements OnInit {
     //edit component loads
     ngOnInit() {
 
-        if (localStorage.getItem("logged") == undefined && localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
+        if (localStorage.getItem("logged")==undefined) {
             this.router.navigate(['dashboard']);
         }
 
@@ -49,7 +49,7 @@ export class EditComponent implements OnInit {
     }
 
     //edit button click handling
-    editVisitor(event, visitor_name, visitor_email, visitor_contact, visitor_indate, visitor_intime) {
+    editVisitor(event, visitor_name, visitor_email, visitor_contact, visitor_indate, visitor_intime, visitor_data_outdate, visitor_data_outtime) {
 
         var result;
         var visitor_data = {
@@ -58,8 +58,8 @@ export class EditComponent implements OnInit {
             visitor_contact: visitor_contact.value.toString().trim(),
             visitor_indate: visitor_indate.value.toString().trim(),
             visitor_intime: visitor_intime.value.toString().trim(),
-            visitor_outdate: new Date().getDate() + "-" + new Date().getMonth() + 1 + "-" + new Date().getFullYear(),
-            visitor_outtime: new Date().toTimeString().split(" ")[0],
+            visitor_outdate: visitor_data_outdate.value.toString().trim(),
+            visitor_outtime: visitor_data_outtime.value.toString().trim(),
             visitor_host: this.useremail,
             visitor_host_name: this.username
         };

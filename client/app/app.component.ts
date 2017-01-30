@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 
-
 @Component({
   moduleId: module.id,
   selector: 'my-app',
@@ -8,4 +7,8 @@ import { Component } from '@angular/core';
 
 })
 
-export class AppComponent { }
+export class AppComponent{
+
+  
+
+}

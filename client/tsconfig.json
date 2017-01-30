@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
+    "allowJs": true,
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false

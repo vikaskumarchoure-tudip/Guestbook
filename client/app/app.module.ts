@@ -13,10 +13,10 @@ import { EditComponent } from './EditComponent/edit.component';
 
 @NgModule({
   imports: [BrowserModule, HttpModule, BrowserModule, FormsModule, ReactiveFormsModule,
-    RouterModule.forRoot(ContactRoutes)
+  RouterModule.forRoot(ContactRoutes)
   ],
   declarations: [AppComponent, LoginComponent, RegisterComponent, DashboardComponent,EditComponent],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 
 })
 

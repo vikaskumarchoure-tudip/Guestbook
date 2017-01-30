@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
 import { DashboardService } from '../services/dashboard.service';
 import { DashboardModel } from '../Model/dashboard.model';
 import { DashboardModelUser } from '../Model/dashboard.modeluq';
+import { ReceptionistModel } from '../Model/receptionist.model';
 import { Router, RouterModule } from '@angular/router';
 import { EditVisitor } from '../services/editvisitor.service';
 import { RegisterService } from '../services/register.service';
@@ -18,6 +19,10 @@ export class DashboardComponent implements OnInit {
 
     searched_data: DashboardModel[];
     saved_datas: DashboardModel[];
+
+    receptionist_str: ReceptionistModel[];
+    ReceptionistArr = [];
+
     dashboardForm: FormGroup;
     search_modal = false;
     addForm: FormGroup;
@@ -42,13 +47,13 @@ export class DashboardComponent implements OnInit {
         }
 
         this.addForm = this.formBuilder.group({
-            useraddname: ['', [Validators.required, Validators.minLength(6),Validators.pattern("[a-zA-Z ]{3,20}")]],
+            useraddname: ['', [Validators.required, Validators.minLength(6), Validators.pattern("[a-zA-Z ]{3,20}")]],
             useraddemail: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
             useraddpassword: ['', [Validators.required, Validators.minLength(6)]]
         });
 
         this.dashboardForm = this.formBuilder.group({
-            visitorname: ['', [Validators.required, Validators.minLength(6),Validators.pattern("[a-zA-Z ]{3,20}")]],
+            visitorname: ['', [Validators.required, Validators.minLength(6), Validators.pattern("[a-zA-Z ]{3,20}")]],
             visitoremail: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]],
             visitorcontact: ['', [Validators.required, Validators.minLength(10), Validators.pattern("[1-9][0-9]{9}")]],
         });
@@ -60,8 +65,11 @@ export class DashboardComponent implements OnInit {
         }
 
         this.saved_datas = [];
-        this.dashboardService.getSavedData(visitoruser).subscribe(saved_data => { this.saved_datas = saved_data });
+        this.dashboardService.getSavedData(visitoruser).
+            subscribe(saved_data => {
+                this.saved_datas = saved_data
 
+            });
     }
 
     //add visitor
@@ -87,6 +95,11 @@ export class DashboardComponent implements OnInit {
             result.subscribe(x => {
                 this.saved_datas.unshift(visitor);
             });
+
+            var newarr = [];
+            newarr = this.saved_datas.sort();
+            console.log(newarr[0]);
+            //for (var i = 0; i < this.saved_datas.length; i++) {         }
         }
         visitorname.value = "";
         visitoremail.value = "";
@@ -103,7 +116,7 @@ export class DashboardComponent implements OnInit {
         localStorage.setItem("current_visitor_data_intime", saved_data.visitor_intime);
         localStorage.setItem("current_visitor_data_host", saved_data.visitor_host);
         localStorage.setItem("current_visitor_data_host_name", saved_data.visitor_host_name);
-        localStorage.setItem("logged","YES");
+        localStorage.setItem("logged", "YES");
         this.router.navigate(['editvisitor']);
     }
 
@@ -130,6 +143,7 @@ export class DashboardComponent implements OnInit {
         this.searched_data = [];
 
         var str1 = search_data.value.toString().toLowerCase().trim();
+
         if (str1.length > 0) {
 
             this.saved_datas.forEach(element => {

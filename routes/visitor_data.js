@@ -12,7 +12,6 @@ router.post('/visitor_data_unique', function (req, res, next) {
     var visitors = req.body;
     //if the logged user is admin
     if (req.body.visitor_role == "admin") {
-        console.log("step0");
         db.visitor_data.find().sort({
                 visitor_host: 1
             },
