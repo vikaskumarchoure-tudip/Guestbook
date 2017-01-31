@@ -10,13 +10,16 @@ import { RegisterComponent } from './RegisterComponent/register.component';
 import { ContactRoutes } from './Routing/users.routing';
 import { DashboardComponent } from './DashboardComponent/dashboard.component';
 import { EditComponent } from './EditComponent/edit.component';
+//import { Ng2SmartTableModule } from 'ng2-smart-table';
+//import { Ng2SmartTableModule, LocalDataSource } from 'ng2-smart-table';
 
 @NgModule({
   imports: [BrowserModule, HttpModule, BrowserModule, FormsModule, ReactiveFormsModule,
-  RouterModule.forRoot(ContactRoutes)
+    RouterModule.forRoot(ContactRoutes)
   ],
-  declarations: [AppComponent, LoginComponent, RegisterComponent, DashboardComponent,EditComponent],
-  bootstrap: [AppComponent]
+  declarations: [AppComponent, LoginComponent, RegisterComponent, DashboardComponent, EditComponent],
+  bootstrap: [AppComponent],
+  providers : []
 
 })
 

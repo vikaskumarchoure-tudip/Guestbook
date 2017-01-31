@@ -51,8 +51,9 @@
                         </div>
                     </div>
                 </div>
-                <li style="padding:20px;"><button data-toggle="modal" (click)="searchVisitor($event, searchvisitor)" data-target="#searchModal"><i class="glyphicon glyphicon-search"></i></button><input
-                        type="text" class="input-lg" placeholder="Search Visitors" autofocus #searchvisitor></li>
+                <li style="padding:20px;"><input type="text" class="input-lg" placeholder="Search Visitors" autofocus #searchvisitor>
+                    <button data-toggle="modal" (click)="searchVisitor($event, searchvisitor)" data-target="#searchModal"><i class="glyphicon glyphicon-search"></i></button>
+                </li>
                 <!-- Modal starts here -->
                 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" id="searchModal">
                     <div class="modal-dialog modal-lg">
@@ -91,14 +92,14 @@
                     </div>
                 </div>
                 <!-- Modal ends here -->
-                <li style="padding:20px;"><a class="navbar-brand" (click)="onLogOut()">Sign Out</a></li>
+                <li style="padding:20px;"><a class="navbar-brand" role="button" (click)="onLogOut()">Sign Out</a></li>
             </ul>
         </div>
     </div>
 </nav>
 <div class="container">
     <div class="row">
-        <h1 style="text-align : center">...Add Visitors...</h1>
+        <h1 style="text-align : center">Add Visitors</h1>
         <div>
             <form [formGroup]="dashboardForm">
                 <table class="col-md-10 col-md-offset-1 table-condensed table-responsive">
@@ -126,13 +127,6 @@
                 </table>
             </form>
         </div>
-        
-        
-            <!-- Collapse panel starts here -->
-
-            <!-- Collapse panel ends here -->
-        
-
         <div class="col-md-12">
             <div class="add-todo-form text-center">
                 <br/><br/>
@@ -165,7 +159,8 @@
                             <td>{{saved_data.visitor_outdate}}</td>
                             <td>{{saved_data.visitor_outtime}}</td>
                             <td><input type="button" (click)="editVisitor(saved_data)" class="btn btn-default pull-right" value="Edit"></td>
-                            <td><input type="button" (click)="deleteVisitor(saved_data)" class="btn btn-danger pull-right" value="Delete"></td>
+                            <td>
+                                <input type="button" (click)="deleteVisitor(saved_data)" class="btn btn-danger pull-right" value="Delete"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -173,3 +168,4 @@
         </div>
     </div>
 </div>
+<div id="snackbar"></div>

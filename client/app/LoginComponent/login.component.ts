@@ -14,8 +14,6 @@ export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loginUsers: LoginUser[];
     submitted = false;
-    logindata = '';
-    user_email = '';
     constructor(private formBuilder: FormBuilder, private loginService: LoginService, private router: Router) { }
 
     //Login component loads
@@ -29,30 +27,53 @@ export class LoginComponent implements OnInit {
 
     //Login button click event handler
     onLogin(event, username, password) {
-        var result;
-        this.loginUsers = [];
-        var userDetail = {
-            email: username.value.toString().trim(),
-            password: password.value.toString().trim(),
+
+        if (username.value == '' && password.value == '') {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            x.style.background = "#EF5350";
+            x.innerHTML = "Please Enter valid details...";
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
         }
+        else {
 
-        result = this.loginService.checkLogin(userDetail);
-
-        result.subscribe(loginUsers => {
-
-            this.loginUsers = loginUsers;
-
-            if (loginUsers.toString() == "User not found") {
-                alert("Please enter correct data");
-                username.value = "";
-                password.value = "";
+            var result;
+            this.loginUsers = [];
+            var userDetail = {
+                email: username.value.toString().trim(),
+                password: password.value.toString().trim(),
             }
-            else {
-                localStorage.setItem('host_email', loginUsers.email);
-                localStorage.setItem('host_name', loginUsers.username);
-                localStorage.setItem('host_role', loginUsers.role);
-                this.router.navigate(['/dashboard']);
-            }
-        });
+
+            result = this.loginService.checkLogin(userDetail);
+
+            result.subscribe(loginUsers => {
+
+                this.loginUsers = loginUsers;
+
+                if (loginUsers.toString() == "User not found") {
+                    //this.login_success = false;
+                    //alert("Please enter correct data");
+                    var x = document.getElementById("snackbar");
+                    x.className = "show";
+                    x.style.background = "#EF5350";
+                    x.innerHTML = "Please enter valid username and password";
+                    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+                    username.value = "";
+                    password.value = "";
+                }
+                else {
+                    var x = document.getElementById("snackbar");
+                    x.className = "show";
+                    x.style.background = "green";
+                    x.innerHTML = "Login Successfull...";
+                    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+
+                    localStorage.setItem('host_email', loginUsers.email);
+                    localStorage.setItem('host_name', loginUsers.username);
+                    localStorage.setItem('host_role', loginUsers.role);
+                    this.router.navigate(['/dashboard']);
+                }
+            });
+        }
     }
 }

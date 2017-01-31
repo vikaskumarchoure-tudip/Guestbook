@@ -25,7 +25,7 @@
                 Password is required
               </div>
               <br/>
-              <button type="button" (click)="registerUser($event,reg_username,reg_pass,reg_conf_pass)" [disabled]="!registerForm.valid"
+              <button type="button" (click)="registerUser($event,reg_username,reg_pass,reg_conf_pass)" data-dismiss="modal" [disabled]="!registerForm.valid"
                 class="btn btn-default">Register</button>
             </div>
           </form>

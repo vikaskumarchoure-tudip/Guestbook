@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
 
     receptionist_str: ReceptionistModel[];
     ReceptionistArr = [];
-
+    delete_data = [];
     dashboardForm: FormGroup;
     search_modal = false;
     addForm: FormGroup;
@@ -30,9 +30,12 @@ export class DashboardComponent implements OnInit {
     useremail = localStorage.getItem("host_email");
     username = localStorage.getItem("host_name");
     userrole = localStorage.getItem("host_role");
-    constructor(private formBuilder: FormBuilder, private dashboardService: DashboardService, private router: Router, private registerService: RegisterService) { }
 
 
+    constructor(private formBuilder: FormBuilder, private dashboardService: DashboardService, private router: Router, private registerService: RegisterService) { 
+        
+    }
+  
     ngOnInit() {
 
         if (localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
@@ -74,36 +77,50 @@ export class DashboardComponent implements OnInit {
 
     //add visitor
     addVisitor(event, visitorname, visitoremail, visitorcontact) {
-        var date = new Date();
-        var result;
-        var visitor = {
-            visitor_name: visitorname.value.toString().trim(),
-            visitor_email: visitoremail.value.toString().trim(),
-            visitor_contact: visitorcontact.value.toString().trim(),
-            visitor_indate: date.getDate() + "-" + date.getMonth() + 1 + "-" + date.getFullYear(),
-            visitor_intime: new Date().toTimeString().split(" ")[0],
-            visitor_outtime: "",
-            visitor_host: this.useremail,
-            visitor_host_name: this.username
-        };
 
-        if (localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
-            this.router.navigate(['']);
+        if (visitorname.value.toString().trim() == "" || visitoremail.value.toString().trim() == "" || visitorcontact.value.toString().trim() == "") {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            x.style.background = "#EF5350";
+            x.innerHTML = "Enter Correct Visitor Data";
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
         }
         else {
-            result = this.dashboardService.setSavedData(visitor);
-            result.subscribe(x => {
-                this.saved_datas.unshift(visitor);
-            });
+            var date = new Date();
+            var result;
+            var visitor = {
+                visitor_name: visitorname.value.toString().trim(),
+                visitor_email: visitoremail.value.toString().trim(),
+                visitor_contact: visitorcontact.value.toString().trim(),
+                visitor_indate: date.getDate() + "-" + date.getMonth() + 1 + "-" + date.getFullYear(),
+                visitor_intime: new Date().toTimeString().split(" ")[0],
+                visitor_outtime: "",
+                visitor_host: this.useremail,
+                visitor_host_name: this.username
+            };
 
-            var newarr = [];
-            newarr = this.saved_datas.sort();
-            console.log(newarr[0]);
-            //for (var i = 0; i < this.saved_datas.length; i++) {         }
+            if (localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
+                this.router.navigate(['']);
+            }
+            else {
+                result = this.dashboardService.setSavedData(visitor);
+                result.subscribe(x => {
+                    this.saved_datas.unshift(visitor);
+                });
+
+                var newarr = [];
+                newarr = this.saved_datas.sort();
+                var x = document.getElementById("snackbar");
+                x.className = "show";
+                x.style.background = "#66bb6a";
+                x.innerHTML = "Visitor Added Successfully";
+                setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+
+            }
+            visitorname.value = "";
+            visitoremail.value = "";
+            visitorcontact.value = "";
         }
-        visitorname.value = "";
-        visitoremail.value = "";
-        visitorcontact.value = "";
     }
 
     //edit visitor
@@ -123,18 +140,21 @@ export class DashboardComponent implements OnInit {
     //delete visitor
     deleteVisitor(saved_data) {
 
-        var saved_data_all = this.saved_datas;
-        console.log(saved_data._id);
+        var delete_data = confirm("Delete visitor " + saved_data.visitor_name);
+        if (delete_data == true) {
+            this.delete_data = saved_data;
+            var saved_data_all = this.saved_datas;
+            this.dashboardService.deleteVisitor(saved_data._id).subscribe(data => {
 
-        this.dashboardService.deleteVisitor(saved_data._id).subscribe(data => {
-            if (data.n == 1) {
-                for (var i = 0; i < saved_data_all.length; i++) {
-                    if (saved_data_all[i]._id == saved_data._id) {
-                        saved_data_all.splice(i, 1);
+                if (data.n == 1) {
+                    for (var i = 0; i < saved_data_all.length; i++) {
+                        if (saved_data_all[i]._id == saved_data._id) {
+                            saved_data_all.splice(i, 1);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
 
     }
 

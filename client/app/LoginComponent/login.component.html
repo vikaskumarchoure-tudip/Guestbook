@@ -1,25 +1,28 @@
+<div class="row">
+  <div class="col-xs-4 col-xs-push-8">
+  </div>
+</div>
 <div class="container col-md-offset-4 col-md-4 col-xs-4 col-xs-offset-4">
-  <br/><br/>
   <img class="img-responsive" src="./app/Images/guestbook.jpg">
   <form [formGroup]="loginForm">
     <div class="formGroup">
       <label for="username">Username</label>
-      <input type="email" class="form-control" name="username" formControlName="username"
-        autofocus placeholder = "xyz@tudip.nl" #username>
+      <input type="email" class="form-control" name="username" formControlName="username" autofocus placeholder="xyz@tudip.nl"
+        #username>
         <div *ngIf="!(loginForm.controls['username'].valid || loginForm.controls['username'].pristine)" class="alert alert-danger">
           Username is required
         </div>
     </div>
     <br/>
     <br/>
+    <div id="snackbar"></div>
     <div class="formGroup">
       <label for="password">Password</label>
-      <input type="password" class="form-control" name="password" formControlName="password"
-       placeholder = "password" #password>
-        <div *ngIf="!(loginForm.controls['password'].valid || loginForm.controls['password'].pristine)" class="alert alert-danger">
-          <div *ngIf="loginForm.controls.password.hasError('minlength')"> Enter at least 6 characters </div>
-          Password is required
-        </div>
+      <input type="password" class="form-control" name="password" formControlName="password" placeholder="password" #password>
+      <div *ngIf="!(loginForm.controls['password'].valid || loginForm.controls['password'].pristine)" class="alert alert-danger">
+        <div *ngIf="loginForm.controls.password.hasError('minlength')"> Enter at least 6 characters </div>
+        Password is required
+      </div>
     </div>
     <br/>
     <br/>
@@ -33,4 +36,5 @@
     </div>
   </form>
 </div>
+
 <register-form></register-form>
