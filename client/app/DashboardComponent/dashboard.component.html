@@ -133,23 +133,39 @@
             </div>
             <div class="todo-list">
                 <!-- <h3 *ngIf="!(dashboard_data)" class="text-center">No data to display</h3> -->
-                <table class="table table-hover">
+                <table class="table table-hover" [mfData]="data" #mf="mfDataTable">
                     <thead>
                         <tr>
-                            <th>Visitor Name</th>
-                            <th *ngIf="is_admin">Receptionist Name</th>
-                            <th>Email</th>
-                            <th>Contact No</th>
-                            <th>Check In Date</th>
-                            <th>Check In Time</th>
-                            <th>Check Out Date</th>
-                            <th>Check Out Time</th>
+                            <th>
+                                <mfDefaultSorter by="visitor_name"> Visitor Name</mfDefaultSorter>
+                            </th>
+                            <th *ngIf="is_admin">
+                                <mfDefaultSorter by="visitor_host_name">Receptionist Name</mfDefaultSorter>
+                            </th>
+                            <th>
+                                <mfDefaultSorter by="visitor_email">Visitor Email</mfDefaultSorter>
+                            </th>
+                            <th>
+                                <mfDefaultSorter by="visitor_contact">Contact</mfDefaultSorter>
+                            </th>
+                            <th>
+                                <mfDefaultSorter by="visitor_indate">In Date</mfDefaultSorter>
+                            </th>
+                            <th>
+                                <mfDefaultSorter by="visitor_intime">Check In Time</mfDefaultSorter>
+                            </th>
+                            <th>
+                                <mfDefaultSorter by="visitor_outdate">Out Date</mfDefaultSorter>
+                            </th>
+                            <th>
+                                <mfDefaultSorter by="visitor_outtime">Check-Out Time</mfDefaultSorter>
+                            </th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let saved_data of saved_datas">
+                        <tr *ngFor="let saved_data of mf.data">
                             <td>{{saved_data.visitor_name}}</td>
                             <td *ngIf="is_admin">{{saved_data.visitor_host_name}}</td>
                             <td>{{saved_data.visitor_email}}</td>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
 import { DashboardService } from '../services/dashboard.service';
 import { DashboardModel } from '../Model/dashboard.model';
@@ -7,19 +7,23 @@ import { ReceptionistModel } from '../Model/receptionist.model';
 import { Router, RouterModule } from '@angular/router';
 import { EditVisitor } from '../services/editvisitor.service';
 import { RegisterService } from '../services/register.service';
+import * as smarttable from 'ng2-smart-table';
+
+//import * as ng2-smart-table from '../../node_modules/ng2-smart-table/ng2-smart-table.js';
 
 @Component({
     moduleId: module.id,
     selector: 'dashboard-form',
     templateUrl: './dashboard.component.html',
-    providers: [DashboardService, EditVisitor, RegisterService]
+    providers: [DashboardService, EditVisitor, RegisterService],
 })
 
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
 
+    public data : any[];
+    
     searched_data: DashboardModel[];
     saved_datas: DashboardModel[];
-
     receptionist_str: ReceptionistModel[];
     ReceptionistArr = [];
     delete_data = [];
@@ -31,11 +35,10 @@ export class DashboardComponent implements OnInit {
     username = localStorage.getItem("host_name");
     userrole = localStorage.getItem("host_role");
 
+    constructor(private formBuilder: FormBuilder, private dashboardService: DashboardService, private router: Router, private registerService: RegisterService) {
 
-    constructor(private formBuilder: FormBuilder, private dashboardService: DashboardService, private router: Router, private registerService: RegisterService) { 
-        
     }
-  
+
     ngOnInit() {
 
         if (localStorage.getItem("host_email") == undefined && localStorage.getItem("host_name") == undefined) {
@@ -71,9 +74,12 @@ export class DashboardComponent implements OnInit {
         this.dashboardService.getSavedData(visitoruser).
             subscribe(saved_data => {
                 this.saved_datas = saved_data
-
+                this.data = saved_data;
             });
+
     }
+
+
 
     //add visitor
     addVisitor(event, visitorname, visitoremail, visitorcontact) {

@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "angular2-datatable": "^0.5.3",
     "angular2-toaster": "^2.0.0",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.15.2",
@@ -16,6 +17,6 @@
     "express": "^4.14.0",
     "mongojs": "^2.4.0",
     "ng2-loading-animate": "0.0.16",
-    "ng2-smart-table": "^0.5.1-2"
+    "ng2-smart-table": "^0.5.1-3"
   }
 }

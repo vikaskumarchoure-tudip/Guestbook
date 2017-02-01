@@ -23,13 +23,11 @@
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
       // other libraries
       'rxjs': 'npm:rxjs',
-      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
+      'angular2-datatable': './node_modules/angular2-datatable',
+      'lodash': './node_modules/lodash/lodash.js'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
-      'ng2-smart-table/lib': {
-        main: 'index.js'
-      },
       app: {
         main: './main.js',
         defaultExtension: 'js'
@@ -41,6 +39,10 @@
         main: './index.js',
         defaultExtension: 'js'
       },
+      'angular2-datatable': {
+        main: './index.js',
+        defaultExtension: 'js'
+      }
     }
   });
 })(this);
